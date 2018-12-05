@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 05 Dec 2018 02:59:11 PM EST
+Last Modified : Wed 05 Dec 2018 05:16:18 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -80,3 +80,9 @@ class SymPro():
         timeseries = self.data[['Timestamp',fieldname]][(self.data['Timestamp'] >= startDate) &\
                 (self.data['Timestamp'] <= endDate)]
         return timeseries
+
+    def apply_filters(self,filters):
+
+        filtersDict = filters.filtersDict
+        for Filter in filtersDict:
+            self.data = self.data[Filter]
