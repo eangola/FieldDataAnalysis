@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Tue 04 Dec 2018 08:35:42 PM EST
+Last Modified : Wed 05 Dec 2018 02:59:11 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -28,15 +28,15 @@ class SymPro():
 
     def __init__(self,filename):
         self.filename = filename
-        self.data = None
+        self.data = self._read_data()
         self.header = None
 
-    def read_data(self,header=None):
+    def _read_data(self,header=None):
 
         if not header:
             header = self._find_header()
-        self.data = pd.read_csv(self.filename,skiprows=header, sep = "\t")
-
+        data = pd.read_csv(self.filename,skiprows=header, sep = "\t")
+        return data
 
     def _find_header(self):
         """
@@ -78,4 +78,5 @@ class SymPro():
             endDate = self.data['Timestamp'].iloc[-1]
 
         timeseries = self.data[['Timestamp',fieldname]][(self.data['Timestamp'] >= startDate) &\
-                (self.data['Timestamp'] <= endDate)
+                (self.data['Timestamp'] <= endDate)]
+        return timeseries
