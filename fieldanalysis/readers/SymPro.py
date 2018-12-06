@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 06 Dec 2018 06:10:57 PM EST
+Last Modified : Thu 06 Dec 2018 06:32:29 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -62,7 +62,15 @@ class SymPro():
                     self.header.append(line.split())
                     headerEnd += 1
 
-    def get_data(self,fieldname):
+    def get_data(self,fieldname,startDate=None,endDate=None):
+
+        if startDate == None:
+            startDate = self.data['Timestamp'].iloc[0]
+        if endDate == None:
+            endDate = self.data['Timestamp'].iloc[-1]
+
+        timeseries = self.data[fieldname][(self.data['Timestamp'] >= startDate) &\
+                (self.data['Timestamp'] <= endDate)]
 
         return self.data[fieldname]
 
