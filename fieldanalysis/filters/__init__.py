@@ -1,3 +1,4 @@
 #!/usr/bin/env python
 
-import filters as filters
+from fieldanalysis.filters.classic_filters import filters as classic_filters
+
