@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 05 Dec 2018 05:16:18 PM EST
+Last Modified : Thu 06 Dec 2018 12:24:57 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -84,5 +84,5 @@ class SymPro():
     def apply_filters(self,filters):
 
         filtersDict = filters.filtersDict
-        for Filter in filtersDict:
+        for Filter in filtersDict.values():
             self.data = self.data[Filter]

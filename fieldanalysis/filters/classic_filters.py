@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Wed 05 Dec 2018 08:17:50 PM EST
+Last Modified : Thu 06 Dec 2018 12:21:43 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -30,6 +30,10 @@ class filters():
         self.filtersDict = {'icing':None}
 
     def generate_icing_filter(self,temp,vaneSD):
+        '''
+        generate an icing filter given temperature and vane
+        SD field.
+        '''
         temp = self.reader.get_data(temp)
         vaneSD = self.reader.get_data(vaneSD)
         if not self.filtersDict['icing']:
