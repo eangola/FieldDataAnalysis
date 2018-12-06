@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Thu 06 Dec 2018 05:39:25 PM EST
+Last Modified : Thu 06 Dec 2018 06:10:52 PM EST
 Created By : Enrique D. Angola
 """
+import pandas as pd
 
 class filters():
     """
@@ -27,8 +28,8 @@ class filters():
 
         self.data = reader.data
         self.reader = reader
-        self.filtersDict = {'icing':None}
-        self.filtersDict['windspeed':None}
+        self.filtersDict = {'icing':pd.Series()}
+        self.filtersDict['windspeed'] = pd.Series()
 
     def generate_icing_filter(self,temp,vaneSD,tempThreshold = 3,\
             vaneSDThreshold = 2):
@@ -38,9 +39,9 @@ class filters():
         '''
         temp = self.reader.get_data(temp)
         vaneSD = self.reader.get_data(vaneSD)
-        if not self.filtersDict['icing']:
+        if self.filtersDict['icing'].empty:
             icingFilter = ((temp >= tempThreshold) &\
-                    (vaneSD >= vaneThreshold))
+                    (vaneSD >= vaneSDThreshold))
             self.filtersDict['icing'] = icingFilter
 
 
@@ -62,7 +63,7 @@ class filters():
 
         """
         wsRef = self.reader.get_data(wsRef)
-        if not self.filtersDict['windspeed']:
+        if self.filtersDict['windspeed'].empty:
             windspeedFilter = (wsRef >= wsThreshold)
             self.filtersDict['windspeed'] = windspeedFilter
 
