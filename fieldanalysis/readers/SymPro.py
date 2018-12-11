@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 06 Dec 2018 06:32:29 PM EST
+Last Modified : Tue 11 Dec 2018 06:06:07 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -10,7 +10,7 @@ import pdb
 
 class SymPro():
     """
-
+    Reads data from symphony pro
 
     Parameters
     ----------
@@ -19,10 +19,6 @@ class SymPro():
     Returns
     -------
 
-
-    Examples
-    --------
-    >>>
 
     """
 
@@ -95,3 +91,34 @@ class SymPro():
         for Filter in filtersDict.values():
             if not Filter.empty:
                 self.data = self.data[Filter]
+
+
+    def get_fieldname(self,channel=None,metric=None):
+        """
+
+
+        Parameters
+        ----------
+        channel: Str
+            Channel to look for Ex. 'Ch1'
+        metric: Str
+            metric to look for Ex. 'Avg'
+
+        Returns
+        -------
+        fieldname: Str
+            fieldname in symph. pro
+        None is fieldname is not found
+
+        """
+        import re
+        expression = channel + '.*_' + metric + '_.*'
+
+        fieldnames = self.get_fieldnames()
+
+        for name in fieldnames:
+            tmp = re.search(expression,name)
+            if tmp != None:
+                return tmp.group()
+
+        return None
