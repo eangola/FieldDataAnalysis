@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Tue 11 Dec 2018 06:06:07 PM EST
+Last Modified : Tue 11 Dec 2018 07:37:01 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
 import pdb
-
+import numpy as np
 
 class SymPro():
     """
@@ -83,6 +83,9 @@ class SymPro():
 
         timeseries = self.data[['Timestamp',fieldname]][(self.data['Timestamp'] >= startDate) &\
                 (self.data['Timestamp'] <= endDate)]
+
+        timeseries = pd.Series(np.array(timeseries[fieldname]),index=\
+                pd.DatetimeIndex(timeseries['Timestamp']))
         return timeseries
 
     def apply_filters(self,filters):

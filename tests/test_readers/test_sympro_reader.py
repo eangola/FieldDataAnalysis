@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 04-12-2018
-Last Modified : Thu 06 Dec 2018 12:49:26 PM EST
+Last Modified : Tue 11 Dec 2018 06:06:03 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -46,3 +46,9 @@ class TestSymproReader():
         self.object.apply_filters(filters)
 
         assert self.object.data.shape == (4,109)
+
+    def test_get_fieldname_returnProperFieldname_returnsTrue(self):
+
+        fieldname = self.object.get_fieldname('Ch1','Avg')
+
+        assert fieldname == 'Ch1_Anem_58.00m_E_Avg_m/s'
