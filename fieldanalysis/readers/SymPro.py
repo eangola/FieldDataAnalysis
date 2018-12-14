@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Tue 11 Dec 2018 07:37:01 PM EST
+Last Modified : Thu 13 Dec 2018 08:43:59 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -23,9 +23,10 @@ class SymPro():
     """
 
     def __init__(self,filename):
+
+        self.header = None
         self.filename = filename
         self.data = self._read_data()
-        self.header = None
 
     def _read_data(self,header=None):
 
