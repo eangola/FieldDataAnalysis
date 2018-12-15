@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 14 Dec 2018 03:04:15 PM EST
+Last Modified : Fri 14 Dec 2018 07:13:38 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -81,3 +81,31 @@ class ClassicAnalyses():
         TI = 100*np.mean(anemSD/anemAvg)
 
         return TI
+
+
+
+    def _bin_data(self,sensor,bins,binBy):
+        """
+        Bin data by specified bins and criteria
+
+        Parameters
+        ----------
+        sensor: Str
+            Fieldname of measure to bin
+        bins: List
+            List of bins
+        binBy: Str
+            Fieldname of measure to use for binning criteria
+
+        Returns
+        -------
+        group: pandas.core.groupby.SeriesGroupBy
+            binned data
+
+        """
+        ref = self.get_timeseries(binBy)
+        binnedRef = pd.cut(ref,bins)
+        data = self.reader.get_timeseries(sensor)
+        group = data.groupby(binnedRef)
+
+        return group
