@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 14 Dec 2018 07:20:24 PM EST
+Last Modified : Mon 17 Dec 2018 04:15:36 PM EST
 Created By : Enrique D. Angola
 """
-
+import pandas as pd
 
 class ClassicAnalyses():
     """
@@ -103,7 +103,7 @@ class ClassicAnalyses():
             binned data
 
         """
-        ref = self.get_timeseries(binBy)
+        ref = self.reader.get_timeseries(binBy)
         binnedRef = pd.cut(ref,bins)
         data = self.reader.get_timeseries(sensor)
         group = data.groupby(binnedRef)

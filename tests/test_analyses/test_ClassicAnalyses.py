@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 11-12-2018
-Last Modified : Tue 11 Dec 2018 04:36:10 PM EST
+Last Modified : Mon 17 Dec 2018 05:14:08 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis import readers
@@ -22,3 +22,9 @@ class TestClassicAnalyses():
 
         ratio = self.object.ws_ratio('Ch1_Anem_58.00m_E_Avg_m/s','Ch2_Anem_50.00m_E_Min_m/s')
         assert len(ratio) == 5
+
+    def test_bin_data_valueReturn_returnsTrue(self):
+
+        group = self.object._bin_data('Ch1_Anem_58.00m_E_Avg_m/s',bins,'Ch7_Anem_46.00m_E_Avg_m/s')
+
+        assert int(group.get_group('(5,10]')[0]) == 7
