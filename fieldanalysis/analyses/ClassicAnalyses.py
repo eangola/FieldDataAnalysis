@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Mon 17 Dec 2018 06:06:33 PM EST
+Last Modified : Mon 17 Dec 2018 06:42:47 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
+import numpy as np
 
 class ClassicAnalyses():
+
     """
 
 
@@ -84,7 +86,7 @@ class ClassicAnalyses():
         return TI
 
 
-    def binned_TI(self,sensorAvg,sensorSD,bins,binBy):
+    def compute_binned_TI(self,anemAvg,anemSD,bins,binBy):
         """
         Computes binned TI
 
@@ -106,18 +108,17 @@ class ClassicAnalyses():
 
         """
         #obtain grouped data
-        anemAvg = self.reader.get_data(anemAvg)
-        anemSD = self.reader.get_data(anemSD)
         groupAvg = self._bin_data(anemAvg,bins,binBy)
         groupSD = self._bin_data(anemSD,bins,binBy)
         #iterate through data and compute TI
         binnedTI = []
-        for i,dataAvg in enumerate(groupAvg.groups.values()):
-            dataSD = groupSD.groups.values[i]
+        for key in groupAvg.groups:
+            dataAvg = groupAvg.get_group(key)
+            dataSD = groupSD.get_group(key)
             binnedTI.append(self.compute_TI(dataAvg,dataSD,True))
 
 
-        return binned_TI
+        return binnedTI
 
 
     def _bin_data(self,sensor,bins,binBy):
@@ -139,9 +140,9 @@ class ClassicAnalyses():
             binned data
 
         """
-        ref = self.reader.get_timeseries(binBy)
+        ref = self.reader.get_timeseries(binBy,self.startDate,self.endDate)
         binnedRef = pd.cut(ref,bins)
-        data = self.reader.get_timeseries(sensor)
+        data = self.reader.get_timeseries(sensor,self.startDate,self.endDate)
         group = data.groupby(binnedRef)
 
         return group
