@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 04-12-2018
-Last Modified : Tue 11 Dec 2018 06:06:03 PM EST
+Last Modified : Mon 17 Dec 2018 03:08:54 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -52,3 +52,9 @@ class TestSymproReader():
         fieldname = self.object.get_fieldname('Ch1','Avg')
 
         assert fieldname == 'Ch1_Anem_58.00m_E_Avg_m/s'
+
+    def test_get_height_returnPoperHeight_returnsTrue(self):
+
+        height = self.object.get_height(22)
+
+        assert height == '20.00'

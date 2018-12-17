@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 13 Dec 2018 08:43:59 PM EST
+Last Modified : Mon 17 Dec 2018 03:07:36 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -126,3 +126,24 @@ class SymPro():
                 return tmp.group()
 
         return None
+
+
+    def get_height(self,channel):
+        """
+        Retrieve height of sensor in tower
+
+        Parameters
+        ----------
+        channel: Int
+            Sensor channel
+
+        Returns
+        -------
+        height: Str
+            height of sensor
+
+        """
+        for i,value in enumerate(self.header):
+            if value == ['Channel:', str(channel)]:
+                height = self.header[i+5][1]
+                return height
