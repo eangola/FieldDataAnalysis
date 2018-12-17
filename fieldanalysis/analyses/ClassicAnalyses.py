@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Mon 17 Dec 2018 04:15:36 PM EST
+Last Modified : Mon 17 Dec 2018 06:06:33 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -55,7 +55,7 @@ class ClassicAnalyses():
         return ratio
 
 
-    def compute_TI(self,anemAvg=None,anemSD=None):
+    def compute_TI(self,anemAvg=None,anemSD=None,binned=False):
         """
         Computes TI for one anemometer
 
@@ -75,13 +75,49 @@ class ClassicAnalyses():
         --------
 
         """
-        anemAvg = self.reader.get_data(anemAvg)
-        anemSD = self.reader.get_data(anemSD)
+        if not binned:
+            anemAvg = self.reader.get_timeseries(anemAvg,self.startDate,self.endDate)
+            anemSD = self.reader.get_timeseries(anemSD,self.startDate,self.endDate)
 
         TI = 100*np.mean(anemSD/anemAvg)
 
         return TI
 
+
+    def binned_TI(self,sensorAvg,sensorSD,bins,binBy):
+        """
+        Computes binned TI
+
+        Parameters
+        ----------
+        sensorAvg: Str
+            fieldname for sensor average
+        sensorSD: Str
+            fieldname for sensor SD
+        bins: List
+            List containing bins
+        binBy: Str
+            fieldname of metric to bin by
+
+        Returns
+        -------
+        binnedTI: list
+            list containing the binned TI
+
+        """
+        #obtain grouped data
+        anemAvg = self.reader.get_data(anemAvg)
+        anemSD = self.reader.get_data(anemSD)
+        groupAvg = self._bin_data(anemAvg,bins,binBy)
+        groupSD = self._bin_data(anemSD,bins,binBy)
+        #iterate through data and compute TI
+        binnedTI = []
+        for i,dataAvg in enumerate(groupAvg.groups.values()):
+            dataSD = groupSD.groups.values[i]
+            binnedTI.append(self.compute_TI(dataAvg,dataSD,True))
+
+
+        return binned_TI
 
 
     def _bin_data(self,sensor,bins,binBy):
