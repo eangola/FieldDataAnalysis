@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Mon 17 Dec 2018 06:42:47 PM EST
+Last Modified : Tue 18 Dec 2018 04:36:11 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -57,7 +57,34 @@ class ClassicAnalyses():
         return ratio
 
 
-    def compute_TI(self,anemAvg=None,anemSD=None,binned=False):
+    def compute_bias(self,sensor1=None,sensor2=None,readData=True):
+        """
+        Compute bias of two sensors
+
+        Parameters
+        ----------
+        sensor1 = Str or Pandas Series
+            sensor1 average fieldname or series
+        sensor2 = Str or Pandas Series
+            sensor2 fieldname or series
+        readData = bool
+            set true if passing fieldnames, False if passing data series
+
+        Returns
+        -------
+
+        """
+        if readData:
+            sensor1 = self.reader.get_timeseries(sensor1,self.startDate,self.endDate)
+            sensor2 = self.reader.get_timeseries(sensor2,self.startDate,self.endDate)
+
+        bias = sensor1 - sensor2
+
+        return bias
+
+
+
+    def compute_TI(self,anemAvg=None,anemSD=None,readData=True):
         """
         Computes TI for one anemometer
 
@@ -77,7 +104,7 @@ class ClassicAnalyses():
         --------
 
         """
-        if not binned:
+        if readData:
             anemAvg = self.reader.get_timeseries(anemAvg,self.startDate,self.endDate)
             anemSD = self.reader.get_timeseries(anemSD,self.startDate,self.endDate)
 
@@ -115,10 +142,47 @@ class ClassicAnalyses():
         for key in groupAvg.groups:
             dataAvg = groupAvg.get_group(key)
             dataSD = groupSD.get_group(key)
-            binnedTI.append(self.compute_TI(dataAvg,dataSD,True))
+            binnedTI.append(self.compute_TI(dataAvg,dataSD,False))
 
 
         return binnedTI
+
+    def compute_binned_bias(self,sensor1,sensor2,bins,binBy,meanBias = True):
+        """
+        Computes binned TI
+
+        Parameters
+        ----------
+        sensor1: Str
+            fieldname for sensor 1
+        sensor2: Str
+            fieldname for sensor 2
+        bins: List
+            List containing bins
+        binBy: Str
+            fieldname of metric to bin by
+
+        Returns
+        -------
+        binnedBias: list
+            list containing the binned bias
+
+        """
+        #obtain grouped data
+        group1 = self._bin_data(sensor1,bins,binBy)
+        group2 = self._bin_data(sensor2,bins,binBy)
+        #iterate through data and compute TI
+        binnedBias = []
+        for key in group1.groups:
+            data1 = group1.get_group(key)
+            data2 = group2.get_group(key)
+            if meanBias:
+                binnedBias.append(np.mean(self.compute_bias(data1,data2,False)))
+            else:
+                binnedBias.append(self.compute_bias(data1,data2,False))
+
+
+        return binnedBias
 
 
     def _bin_data(self,sensor,bins,binBy):
