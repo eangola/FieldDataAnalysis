@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Thu 20 Dec 2018 05:24:00 PM EST
+Last Modified : Thu 20 Dec 2018 06:15:37 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -72,8 +72,7 @@ class ClassicPlotter():
                 r'$\mathrm{r}=%.2f$' % (r, )))
         axs[0].text(0.9, 0.78,textstr,horizontalalignment='center',\
                 verticalalignment='center',transform = axs[0].transAxes)
-        axs[0].set_ylim(min(b)-10,max(b)*1.1)
-        #axs[0].text(0,10,textstr)
+        #axs[0].set_ylim(min(b)-10,max(b)*1.1)
         axs[1].plot([min(b),max(b)],[0,0])
         axs[1].set_title('residuals')
         axs[1].plot(b,res,'.')
