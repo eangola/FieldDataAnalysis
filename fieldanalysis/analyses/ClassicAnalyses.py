@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Wed 19 Dec 2018 07:18:06 PM EST
+Last Modified : Wed 19 Dec 2018 07:46:16 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -244,7 +244,7 @@ class ClassicAnalyses():
 
         predict = regr.predict(measure1)
         r2 = r2_score(measure2,predict) #coefficient of determination, explained variance
-        mse = mean_squared_error(measure2,predict)
+        mse = mean_squared_error(measure2,predict,multioutput='raw_values')
 
-        return {'params':params,'r2':r2,'mse':mse, 'r':r}
+        return {'params':params,'r2':r2,'mse':mse, 'r':r,'model':regr}
 
