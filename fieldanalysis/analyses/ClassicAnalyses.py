@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Tue 18 Dec 2018 04:36:11 PM EST
+Last Modified : Wed 19 Dec 2018 07:18:06 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -210,3 +210,41 @@ class ClassicAnalyses():
         group = data.groupby(binnedRef)
 
         return group
+
+
+    def compute_linear_regression(self,measure1,measure2,readData=True):
+        """
+
+
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+
+
+        """
+        from sklearn import datasets, linear_model
+        from sklearn.metrics import mean_squared_error, r2_score
+
+        if readData:
+            measure1 = self.reader.get_timeseries(measure1,self.startDate,self.endDate)
+            measure2 = self.reader.get_timeseries(measure2,self.startDate,self.endDate)
+
+        r = np.corrcoef(measure1,measure2)[0,1] #correlation coefficient
+
+        measure1 = measure1.reshape(len(measure1),1)
+        measure2 = measure2.reshape(len(measure2),1)
+
+        regr = linear_model.LinearRegression()
+
+        regr.fit(measure1,measure2)
+        params = (regr.coef_[0],regr.intercept_)
+
+        predict = regr.predict(measure1)
+        r2 = r2_score(measure2,predict) #coefficient of determination, explained variance
+        mse = mean_squared_error(measure2,predict)
+
+        return {'params':params,'r2':r2,'mse':mse, 'r':r}
+
