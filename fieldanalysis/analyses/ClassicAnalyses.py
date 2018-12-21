@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Thu 20 Dec 2018 06:23:07 PM EST
+Last Modified : Thu 20 Dec 2018 08:13:06 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -108,12 +108,12 @@ class ClassicAnalyses():
             anemAvg = self.reader.get_timeseries(anemAvg,self.startDate,self.endDate)
             anemSD = self.reader.get_timeseries(anemSD,self.startDate,self.endDate)
 
-        TI = 100*np.mean(anemSD/anemAvg)
+        TI = 100*anemSD/anemAvg
 
         return TI
 
 
-    def compute_binned_TI(self,anemAvg,anemSD,bins,binBy):
+    def compute_binned_TI(self,anemAvg,anemSD,bins,binBy,meanTI = False):
         """
         Computes binned TI
 
@@ -142,12 +142,15 @@ class ClassicAnalyses():
         for key in groupAvg.groups:
             dataAvg = groupAvg.get_group(key)
             dataSD = groupSD.get_group(key)
-            binnedTI.append(self.compute_TI(dataAvg,dataSD,False))
+            if meanTI:
+                binnedTI.append(np.mean(self.compute_TI(dataAvg,dataSD,False)))
+            else:
+                binnedTI.append(self.compute_TI(dataAvg,dataSD,False))
 
 
         return binnedTI
 
-    def compute_binned_bias(self,sensor1,sensor2,bins,binBy,meanBias = True):
+    def compute_binned_bias(self,sensor1,sensor2,bins,binBy,meanBias = False):
         """
         Computes binned TI
 
