@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Thu 06 Dec 2018 06:10:52 PM EST
+Last Modified : Fri 21 Dec 2018 05:15:46 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -67,3 +67,28 @@ class filters():
             windspeedFilter = (wsRef >= wsThreshold)
             self.filtersDict['windspeed'] = windspeedFilter
 
+    
+    def generate_best_sector_filter(self,degRef=None,boom=None,bestSector=30):
+        """
+
+
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+
+
+        Examples
+        --------
+        >>>
+
+        """
+
+        degRef = self.reader.get_data(degRef)
+        center = (boom[0]+boom[1])/2
+        sector = [center - bestSector/2, center + bestSector/2]
+        if self.filtersDict['bestsector'].empty:
+            bestsectorFilter = (degRef >= sector[0]) and (degRef <= sector[1])
+            self.bestsectorFilter['bestsector'] = bestsectorFilter
