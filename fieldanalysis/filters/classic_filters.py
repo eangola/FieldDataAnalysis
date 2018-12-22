@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Fri 21 Dec 2018 05:15:46 PM EST
+Last Modified : Fri 21 Dec 2018 08:19:11 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
+import pdb
 
 class filters():
     """
-
+    Object containing classic filters. Filters need to be generated in order to be applied
+    to data
 
     Parameters
     ----------
@@ -30,6 +32,7 @@ class filters():
         self.reader = reader
         self.filtersDict = {'icing':pd.Series()}
         self.filtersDict['windspeed'] = pd.Series()
+        self.filtersDict['bestsector'] = pd.Series()
 
     def generate_icing_filter(self,temp,vaneSD,tempThreshold = 3,\
             vaneSDThreshold = 2):
@@ -45,7 +48,7 @@ class filters():
             self.filtersDict['icing'] = icingFilter
 
 
-    def generate_windspeed_filter(wsRef=None,wsThreshold = 3):
+    def generate_windspeed_filter(self,wsRef=None,wsThreshold = 3):
         """
 
 
@@ -66,8 +69,13 @@ class filters():
         if self.filtersDict['windspeed'].empty:
             windspeedFilter = (wsRef >= wsThreshold)
             self.filtersDict['windspeed'] = windspeedFilter
+        #add another filter
+        else:
+            windspeedFilter = (wsRef >= wsThreshold)
+            self.filtersDict['windspeed'] = (self.filtersDict['windspeed'] &\
+                    windspeedFilter)
 
-    
+
     def generate_best_sector_filter(self,degRef=None,boom=None,bestSector=30):
         """
 
@@ -92,3 +100,20 @@ class filters():
         if self.filtersDict['bestsector'].empty:
             bestsectorFilter = (degRef >= sector[0]) and (degRef <= sector[1])
             self.bestsectorFilter['bestsector'] = bestsectorFilter
+
+
+    def clear_all_filters(self):
+        """
+        Restarts the object, clearing all generated filters
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
+        self.__init__(self.reader)
+

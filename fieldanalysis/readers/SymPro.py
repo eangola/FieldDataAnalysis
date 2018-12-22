@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Fri 21 Dec 2018 07:28:04 PM EST
+Last Modified : Fri 21 Dec 2018 08:18:50 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -93,9 +93,13 @@ class SymPro():
     def apply_filters(self,filters):
 
         filtersDict = filters.filtersDict
+        finalFilter = pd.Series()
+        #merge filters
         for Filter in filtersDict.values():
-            if not Filter.empty:
-                self.data = self.data[Filter]
+            finalFilter = (finalFilter & Filter)
+
+        #apply merged filters
+        self.data = self.data[finalFilter]
 
     def remove_filters(self):
         """
