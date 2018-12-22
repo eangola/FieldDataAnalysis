@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Mon 17 Dec 2018 03:07:36 PM EST
+Last Modified : Fri 21 Dec 2018 07:28:04 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -27,6 +27,7 @@ class SymPro():
         self.header = None
         self.filename = filename
         self.data = self._read_data()
+        self.nonFilteredData = self.data
 
     def _read_data(self,header=None):
 
@@ -96,6 +97,20 @@ class SymPro():
             if not Filter.empty:
                 self.data = self.data[Filter]
 
+    def remove_filters(self):
+        """
+        Remove all filters from data
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        None
+
+        """
+        self.data = self.nonFilteredData
 
     def get_fieldname(self,channel=None,metric=None):
         """
