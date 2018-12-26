@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Mon 24 Dec 2018 04:50:22 PM EST
+Last Modified : Wed 26 Dec 2018 03:38:11 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -92,11 +92,27 @@ class SymPro():
 
     def apply_filters(self,filters):
 
+        """
+        Applies filter object to data
+
+        Parameters
+        ----------
+        filters: Filter object
+
+        Returns
+        -------
+        None
+
+        """
+
         filtersDict = filters.filtersDict
-        finalFilter = pd.Series()
+        #start with all True (no filter)
+        finalFilter = pd.Series([True for i in range(len(self.data))])
         #merge filters
         for Filter in filtersDict.values():
-            finalFilter = (finalFilter & Filter)
+            #if a filter is empty, it will set all to False
+            if not Filter.empty:
+                finalFilter = (finalFilter & Filter)
 
         #apply merged filters
         self.data = self.data[finalFilter]
