@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 11-12-2018
-Last Modified : Mon 17 Dec 2018 05:14:08 PM EST
+Last Modified : Mon 24 Dec 2018 04:56:39 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis import readers
@@ -15,12 +15,12 @@ class TestClassicAnalyses():
 
     def test_ws_ratio_checkFirstAndLastRatio_returnsTrue(self):
 
-        ratio = self.object.ws_ratio('Ch1_Anem_58.00m_E_Avg_m/s','Ch2_Anem_50.00m_E_Min_m/s')
+        ratio = self.object.compute_ws_ratio('Ch1_Anem_58.00m_E_Avg_m/s','Ch2_Anem_50.00m_E_Min_m/s')
         assert int(ratio[0]) == 1 and int(ratio[3]) == 1
 
     def test_ws_ratio_checkLength_returnsTrue(self):
 
-        ratio = self.object.ws_ratio('Ch1_Anem_58.00m_E_Avg_m/s','Ch2_Anem_50.00m_E_Min_m/s')
+        ratio = self.object.compute_ws_ratio('Ch1_Anem_58.00m_E_Avg_m/s','Ch2_Anem_50.00m_E_Min_m/s')
         assert len(ratio) == 5
 
     def test_bin_data_valueReturn_returnsTrue(self):

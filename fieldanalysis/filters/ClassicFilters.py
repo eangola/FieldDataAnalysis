@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Fri 21 Dec 2018 08:19:11 PM EST
+Last Modified : Mon 24 Dec 2018 05:05:12 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
-import pdb
 
-class filters():
+class ClassicFilters():
     """
     Object containing classic filters. Filters need to be generated in order to be applied
     to data
