@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 """
 Created : 04-12-2018
-Last Modified : Wed 26 Dec 2018 08:24:30 PM EST
+Last Modified : Thu 27 Dec 2018 12:26:29 PM EST
 Created By : Enrique D. Angola
 """
 
 from fieldanalysis import readers
 from pytest import approx
+import pandas as pd
 
 class TestSymproReader():
 
@@ -57,21 +58,32 @@ class TestSymproReader():
 
     def test_apply_filter_filteredDataframe_returnsTrue(self):
 
-        from fieldanalysis.filters import classic_filters as cf
+        from fieldanalysis.filters import ClassicFilters as cf
         filters = cf(self.object)
-        filters.generate_icing_filter(temp='Ch17_Analog_2.00m_S_Avg_C',vaneSD='Ch26_Vane_57.00m_S_SD_deg')
+        filters.generate_icing_filter(temp='Ch17_Analog_2.00m_S_Avg_C',\
+                vaneSD='Ch26_Vane_57.00m_S_SD_deg')
         self.object.apply_filters(filters)
 
         assert self.object.data.shape == (4,109)
 
     def test_apply_filter_filteredDataFilteredTimestamp_returnsTrue(self):
 
-        from fieldanalysis.filters import classic_filters as cf
+        from fieldanalysis.filters import ClassicFilters as cf
         filters = cf(self.object)
         filters.generate_icing_filter(temp='Ch17_Analog_2.00m_S_Avg_C',vaneSD='Ch26_Vane_57.00m_S_SD_deg')
         self.object.apply_filters(filters)
-        
-        assert self.object.data.Timestamp.iloc[-1] == pd.Timestamp('2018-06-22 00:30:00')
+
+        assert self.object.data.Timestamp.iloc[-1] == '2018-06-22 00:30:00'
+
+    def test_remove_filters_retrieveOriginalData_returnsTrue(self):
+
+        from fieldanalysis.filters import ClassicFilters as cf
+        filters = cf(self.object)
+        filters.generate_icing_filter(temp='Ch17_Analog_2.00m_S_Avg_C',vaneSD='Ch26_Vane_57.00m_S_SD_deg')
+        self.object.apply_filters(filters)
+        self.object.remove_filters()
+        assert self.object.data.Timestamp.iloc[-1] == '2018-11-14 23:50:00' and\
+                self.object.data.shape == (5,109)
 
     def test_get_fieldname_returnProperFieldname_returnsTrue(self):
 
