@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 """
 Created : 04-12-2018
-Last Modified : Mon 17 Dec 2018 03:08:54 PM EST
+Last Modified : Wed 26 Dec 2018 08:24:30 PM EST
 Created By : Enrique D. Angola
 """
 
-from fieldanalysis.readers import SymPro as reader
+from fieldanalysis import readers
+from pytest import approx
 
 class TestSymproReader():
 
     def setup(self):
         filename = 'tests/testfiles/symprotest.txt'
-        self.object = reader(filename)
+        self.object = readers.SymPro(filename)
 
     def test_get_data_dataSuccesfullyRead_returnsTrue(self):
 
@@ -31,12 +32,28 @@ class TestSymproReader():
         assert fieldnames[0] == 'Timestamp' and\
                 fieldnames[-1] == 'Ch26_Vane_57.00m_S_GustDir_deg'
 
-    def test_get_timeseries_properShapre_returnsTrue(self):
+    def test_get_timeseries_properShape_returnsTrue(self):
 
         timeseries = self.object.get_timeseries('Ch1_Anem_58.00m_E_Gust_m/s',\
                 '2018-06-22 00:00:00','2018-06-22 00:20:00')
 
-        assert timeseries.shape == (3,2)
+        assert timeseries.shape == (3,)
+
+    def test_get_timeseries_properDates_returnsTrue(self):
+
+        timeseries = self.object.get_timeseries('Ch1_Anem_58.00m_E_Gust_m/s',\
+                '2018-06-22 00:00:00','2018-06-22 00:20:00')
+
+        assert timeseries.index[0] == pd.Timestamp('2018-06-22 00:00:00') and \
+                timeseries.index[-1] == pd.Timestamp('2018-06-22 00:20:00')
+
+    def test_get_timeseries_firstAndLastValues_returnsTrue(self):
+
+        timeseries = self.object.get_timeseries('Ch1_Anem_58.00m_E_Gust_m/s',\
+                '2018-06-22 00:00:00','2018-06-22 00:20:00')
+
+        assert timeseries.iloc[0] == approx(8.72,0.01) and \
+                timeseries.iloc[-1] == approx(8.68,0.01)
 
     def test_apply_filter_filteredDataframe_returnsTrue(self):
 
@@ -46,6 +63,15 @@ class TestSymproReader():
         self.object.apply_filters(filters)
 
         assert self.object.data.shape == (4,109)
+
+    def test_apply_filter_filteredDataFilteredTimestamp_returnsTrue(self):
+
+        from fieldanalysis.filters import classic_filters as cf
+        filters = cf(self.object)
+        filters.generate_icing_filter(temp='Ch17_Analog_2.00m_S_Avg_C',vaneSD='Ch26_Vane_57.00m_S_SD_deg')
+        self.object.apply_filters(filters)
+        
+        assert self.object.data.Timestamp.iloc[-1] == pd.Timestamp('2018-06-22 00:30:00')
 
     def test_get_fieldname_returnProperFieldname_returnsTrue(self):
 
