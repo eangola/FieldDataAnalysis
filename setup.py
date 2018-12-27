@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """
 Created : 27-12-2018
-Last Modified : Thu 27 Dec 2018 05:50:10 PM EST
+Last Modified : Thu 27 Dec 2018 06:06:17 PM EST
 Created By : Enrique D. Angola
 """
 
 from setuptools import setup
+from setuptools import find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -19,7 +20,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://bitbucket.org/eangola/analysislibrary",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
