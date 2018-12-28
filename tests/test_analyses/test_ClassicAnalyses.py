@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 """
 Created : 11-12-2018
-Last Modified : Mon 24 Dec 2018 04:56:39 PM EST
+Last Modified : Fri 28 Dec 2018 05:15:40 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis import readers
 from fieldanalysis import analyses
+from pytest import approx
 class TestClassicAnalyses():
 
     def setup(self):
@@ -25,6 +26,12 @@ class TestClassicAnalyses():
 
     def test_bin_data_valueReturn_returnsTrue(self):
 
-        group = self.object._bin_data('Ch1_Anem_58.00m_E_Avg_m/s',bins,'Ch7_Anem_46.00m_E_Avg_m/s')
-
-        assert int(group.get_group('(5,10]')[0]) == 7
+        bins = [7,7.5,7.9]
+        group = self.object._bin_data('Ch1_Anem_58.00m_E_Avg_m/s',bins,'Ch1_Anem_58.00m_E_Avg_m/s')
+        elements = []
+        for key in group.groups:
+            elements.append(group.get_group(key))
+        
+        assert elements[0].values[0] <= bins[1] and elements[0].values[1] <= bins[1]
+        assert elements[1].values[1] >= bins[1]
+        assert elements[0].shape == (2,) and elements[1].shape == (3,)
