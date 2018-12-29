@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Thu 20 Dec 2018 06:15:37 PM EST
+Last Modified : Fri 28 Dec 2018 06:31:51 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -29,8 +29,10 @@ class ClassicPlotter():
     def __init__(self,analyses):
         self.analyses = analyses
 
-    def plot_scatter(self,x=None,y=None):
-        plt.scatter(x,y)
+    def plot_scatter(self,x=None,y=None,newFig=True):
+        if newFig:
+            plt.figure()
+        plt.scatter(x,y,s=1)
 
 
     def plot_linear_regression(self,measure1,measure2,readData=True):
