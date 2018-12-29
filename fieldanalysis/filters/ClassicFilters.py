@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Mon 24 Dec 2018 05:05:12 PM EST
+Last Modified : Fri 28 Dec 2018 07:04:31 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -97,8 +97,8 @@ class ClassicFilters():
         center = (boom[0]+boom[1])/2
         sector = [center - bestSector/2, center + bestSector/2]
         if self.filtersDict['bestsector'].empty:
-            bestsectorFilter = (degRef >= sector[0]) and (degRef <= sector[1])
-            self.bestsectorFilter['bestsector'] = bestsectorFilter
+            bestsectorFilter = ((degRef >= sector[0]) & (degRef <= sector[1]))
+            self.filtersDict['bestsector'] = bestsectorFilter
 
 
     def clear_all_filters(self):
