@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 26 Dec 2018 03:38:11 PM EST
+Last Modified : Wed 02 Jan 2019 02:20:08 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -108,6 +108,8 @@ class SymPro():
         filtersDict = filters.filtersDict
         #start with all True (no filter)
         finalFilter = pd.Series([True for i in range(len(self.data))])
+        #set index of finalFilter = self.data.index so that filter and data index match
+        finalFilter.index = self.data.index
         #merge filters
         for Filter in filtersDict.values():
             #if a filter is empty, it will set all to False
