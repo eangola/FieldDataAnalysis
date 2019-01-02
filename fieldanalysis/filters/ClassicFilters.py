@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Fri 28 Dec 2018 07:04:31 PM EST
+Last Modified : Wed 02 Jan 2019 05:14:36 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
+import pdb
 
 class ClassicFilters():
     """
@@ -99,6 +100,7 @@ class ClassicFilters():
         if self.filtersDict['bestsector'].empty:
             bestsectorFilter = ((degRef >= sector[0]) & (degRef <= sector[1]))
             self.filtersDict['bestsector'] = bestsectorFilter
+        
 
 
     def clear_all_filters(self):
@@ -115,4 +117,21 @@ class ClassicFilters():
 
         """
         self.__init__(self.reader)
+
+
+    def clear_filter(self,filterKey=None):
+        """
+        Clears a particular filter, sets it to empty
+
+        Parameters
+        ----------
+        filterKey: Str
+            key of filter to reset
+
+        Returns
+        -------
+        None
+
+        """
+        self.filtersDict[filterKey] = pd.Series()
 

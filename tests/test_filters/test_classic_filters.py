@@ -19,3 +19,16 @@ class TestClassicFilters():
 
         assert not icingFilter.iloc[-1]
         assert icingFilter.iloc[0]
+
+    def test_clear_filter_generateFiltersAndResetOne_returnsTrue(self):
+    
+        
+        self.object.filtersDict['icing'] = 'not empty'
+        self.object.filtersDict['windspeed'] = 'not empty'
+
+        self.object.clear_filter('icing')
+
+        assert self.object.filtersDict['icing'].empty and\
+                 self.object.filtersDict['windspeed'] == 'not empty'
+
+
