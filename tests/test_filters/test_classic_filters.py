@@ -22,7 +22,7 @@ class TestClassicFilters():
 
     def test_clear_filter_generateFiltersAndResetOne_returnsTrue(self):
     
-        
+        #this should be mocked 
         self.object.filtersDict['icing'] = 'not empty'
         self.object.filtersDict['windspeed'] = 'not empty'
 

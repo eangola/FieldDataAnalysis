@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 04-12-2018
-Last Modified : Thu 27 Dec 2018 12:26:29 PM EST
+Last Modified : Thu 03 Jan 2019 04:52:23 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -91,8 +91,9 @@ class TestSymproReader():
 
         assert fieldname == 'Ch1_Anem_58.00m_E_Avg_m/s'
 
-    def test_get_height_returnPoperHeight_returnsTrue(self):
+    def test_get_info_returnPoperInfo_returnsTrue(self):
 
-        height = self.object.get_height(22)
+        info = self.object.get_info(2)
 
-        assert height == '20.00'
+        assert info['height'] == '50.00' and info['sType'] == 'Anemometer' and \
+                info['sNumber'] == '94050000009' and info['brand'][0] == 'NRG'
