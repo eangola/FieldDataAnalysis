@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 02 Jan 2019 02:20:08 PM EST
+Last Modified : Thu 03 Jan 2019 04:33:18 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -165,9 +165,9 @@ class SymPro():
         return None
 
 
-    def get_height(self,channel):
+    def get_info(self,channel):
         """
-        Retrieve height of sensor in tower
+        Retrieves info of sensor in tower
 
         Parameters
         ----------
@@ -176,11 +176,21 @@ class SymPro():
 
         Returns
         -------
-        height: Str
-            height of sensor
+        info: Dict
+            keys: sType,height,brand,sNumber,scale,offset
+            values: Strings
 
         """
         for i,value in enumerate(self.header):
             if value == ['Channel:', str(channel)]:
+                sType = self.header[i+2][1]
                 height = self.header[i+5][1]
-                return height
+                brand = self.header[i+3][1:]
+                sNumber = self.header[i+4][-1]
+                scale = self.header[i+7][-1]
+                offset - self.header[i+8][-1]
+
+        info = {'sType':sType,'height':height,'brand',brand,'sNumber',sNumber,'scale',scale,'offset',offset}
+
+        return info
+
