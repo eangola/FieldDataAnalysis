@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 03 Jan 2019 04:33:18 PM EST
+Last Modified : Thu 03 Jan 2019 04:48:45 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -188,9 +188,9 @@ class SymPro():
                 brand = self.header[i+3][1:]
                 sNumber = self.header[i+4][-1]
                 scale = self.header[i+7][-1]
-                offset - self.header[i+8][-1]
+                offset = self.header[i+8][-1]
 
-        info = {'sType':sType,'height':height,'brand',brand,'sNumber',sNumber,'scale',scale,'offset',offset}
+        info = {'sType':sType,'height':height,'brand':brand,'sNumber':sNumber,'scale':scale,'offset':offset}
 
         return info
 
