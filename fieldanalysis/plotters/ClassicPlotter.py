@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 28 Dec 2018 06:31:51 PM EST
+Last Modified : Thu 03 Jan 2019 04:18:09 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -33,6 +33,25 @@ class ClassicPlotter():
         if newFig:
             plt.figure()
         plt.scatter(x,y,s=1)
+
+
+    def monthly_ratios(self,ratios):
+        """
+        Computes ratios by month and plots them
+
+        Parameters
+        ----------
+        ratios: List
+            list of ratios
+
+        Returns
+        -------
+        None
+
+        """
+        plt.figure()
+        monthlyRatios = [ratio.resample('M').mean() for ratio in ratios]
+        plt.plot(monthlyRatios,'*-',label=None)
 
 
     def plot_linear_regression(self,measure1,measure2,readData=True):
