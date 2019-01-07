@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 28 Dec 2018 04:51:15 PM EST
+Last Modified : Mon 07 Jan 2019 06:03:16 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -237,9 +237,9 @@ class ClassicAnalyses():
             measure2 = self.reader.get_timeseries(measure2,self.startDate,self.endDate)
 
         r = np.corrcoef(measure1,measure2)[0,1] #correlation coefficient
-
-        measure1 = measure1.reshape(len(measure1),1)
-        measure2 = measure2.reshape(len(measure2),1)
+        
+        measure1 = measure1.values.reshape(len(measure1),1)
+        measure2 = measure2.values.reshape(len(measure2),1)
 
         regr = linear_model.LinearRegression()
 
