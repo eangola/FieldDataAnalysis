@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 03 Jan 2019 04:48:45 PM EST
+Last Modified : Wed 09 Jan 2019 04:28:26 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -28,15 +28,16 @@ class SymPro():
         self.filename = filename
         self.data = self._read_data()
         self.nonFilteredData = self.data
+        self.names=None
 
-    def _read_data(self,header=None):
+    def _read_data(self,header=None,sep="\t"):
 
         if not header:
             header = self._find_header()
-        data = pd.read_csv(self.filename,skiprows=header, sep = "\t")
+        data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
         return data
 
-    def _find_header(self):
+    def _find_header(self,delimiter='timestamp'):
         """
         Finds the end of the header file
 
@@ -54,7 +55,7 @@ class SymPro():
         with open(self.filename) as f:
             headerEnd = 0
             for line in f:
-                if line.lower().find('timestamp') != -1:
+                if line.lower().find(delimiter) != -1:
                     return headerEnd
                 else:
                     self.header.append(line.split())
@@ -189,6 +190,7 @@ class SymPro():
                 sNumber = self.header[i+4][-1]
                 scale = self.header[i+7][-1]
                 offset = self.header[i+8][-1]
+
 
         info = {'sType':sType,'height':height,'brand':brand,'sNumber':sNumber,'scale':scale,'offset':offset}
 
