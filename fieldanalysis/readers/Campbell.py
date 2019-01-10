@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 09-01-2019
-Last Modified : Wed 09 Jan 2019 04:23:45 PM EST
+Last Modified : Thu 10 Jan 2019 12:50:20 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
@@ -33,6 +33,7 @@ class Campbell(SymPro):
 
     def _read_data(self,header=None,sep=","):
         data = super(Campbell, self)._read_data(sep = sep)
+        data = data.rename({'TIMESTAMP':'Timestamp'},axis='columns')
         return data
 
     def _find_header(self,delimiter='rn'):
