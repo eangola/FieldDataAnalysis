@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 """
 Created : 09-01-2019
-Last Modified : Thu 10 Jan 2019 12:50:20 PM EST
+Last Modified : Thu 10 Jan 2019 01:21:57 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
+import numpy as np
 import pdb
 
 
@@ -34,6 +35,9 @@ class Campbell(SymPro):
     def _read_data(self,header=None,sep=","):
         data = super(Campbell, self)._read_data(sep = sep)
         data = data.rename({'TIMESTAMP':'Timestamp'},axis='columns')
+        data = data.replace('NAN',np.nan)
+        #data = data.dropna()
+        data.loc[:,data.columns != 'Timestamp'] = data.loc[:,data.columns != 'Timestamp'].astype(float)
         return data
 
     def _find_header(self,delimiter='rn'):
