@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 09 Jan 2019 04:28:26 PM EST
+Last Modified : Fri 11 Jan 2019 02:23:20 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -10,28 +10,31 @@ import numpy as np
 
 class SymPro():
     """
-    Reads data from symphony pro
+    Reads data from symphony pro logger file
 
     Parameters
     ----------
-
+    filename: Str
+        path to file
 
     Returns
     -------
-
+    Initializes SymPro object
 
     """
 
     def __init__(self,filename):
 
+        self.names=None
         self.header = None
         self.filename = filename
         self.data = self._read_data()
         self.nonFilteredData = self.data
-        self.names=None
 
     def _read_data(self,header=None,sep="\t"):
-
+        """
+        private method reads data from sympro logger format into a data frame
+        """
         if not header:
             header = self._find_header()
         data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
@@ -63,6 +66,25 @@ class SymPro():
 
     def get_data(self,fieldname,startDate=None,endDate=None):
 
+        """
+        Retrieve dataframe
+
+        Parameters
+        ----------
+        fieldname: Str
+            Fieldname of column to retrieve
+        startDate: Str
+            start date, if None, returs all values
+        endDate: Str
+            end date, if None, returns all values
+
+        Returns
+        -------
+        Dataframe
+            Pandas dataframe of requested data column
+
+        """
+
         if startDate == None:
             startDate = self.data['Timestamp'].iloc[0]
         if endDate == None:
@@ -74,10 +96,31 @@ class SymPro():
         return self.data[fieldname]
 
     def get_fieldnames(self):
+        """
+        Returns all keys (fieldnames) for data columns
+        """
 
         return self.data.keys()
 
     def get_timeseries(self,fieldname,startDate=None,endDate=None):
+        """
+        Retrieve pandas time-series of specified data column
+
+        Parameters
+        ----------
+        fieldname: Str
+            Fieldname of column to retrieve
+        startDate: Str
+            start date, if None, returs all values
+        endDate: Str
+            end date, if None, returns all values
+
+        Returns
+        -------
+        Timeseries: Pandas time-series
+            Pandas time-series of requested data column
+
+        """
 
         if startDate == None:
             startDate = self.data['Timestamp'].iloc[0]
@@ -124,21 +167,11 @@ class SymPro():
         """
         Remove all filters from data
 
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
-
         """
         self.data = self.nonFilteredData
 
     def get_fieldname(self,channel=None,metric=None):
         """
-
-
         Parameters
         ----------
         channel: Str
@@ -150,7 +183,7 @@ class SymPro():
         -------
         fieldname: Str
             fieldname in symph. pro
-        None is fieldname is not found
+        None: if fieldname is not found
 
         """
         import re

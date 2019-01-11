@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Mon 07 Jan 2019 06:03:16 PM EST
+Last Modified : Fri 11 Jan 2019 02:15:42 PM EST
 Created By : Enrique D. Angola
+
+Implements classic field data analyses methods for vanes and anemometers.
+
 """
 import pandas as pd
 import numpy as np
@@ -11,19 +14,16 @@ import pdb
 class ClassicAnalyses():
 
     """
-
+    Methods can be applied to mast data
 
     Parameters
     ----------
-
-
-    Returns
-    -------
-
-
-    Examples
-    --------
-    >>>
+    reader: fieldanalysis.reader object
+        data source reader
+    startDate: Str
+        date to start analysis
+    endDate: Str
+        date to end analysis
 
     """
 
@@ -32,7 +32,7 @@ class ClassicAnalyses():
         self.startDate = startDate
         self.endDate = endDate
 
-    def compute_ws_ratio(self,anem1=None,anem2=None):
+    def compute_ws_ratio(self,anem1=None,anem2=None,readData=True):
 
         """
         Computes wind speed ratio between two anemometers
@@ -51,9 +51,10 @@ class ClassicAnalyses():
 
 
         """
-
-        anem1 = self.reader.get_timeseries(anem1,self.startDate,self.endDate)
-        anem2 = self.reader.get_timeseries(anem2,self.startDate,self.endDate)
+        if readData:
+            anem1 = self.reader.get_timeseries(anem1,self.startDate,self.endDate)
+            anem2 = self.reader.get_timeseries(anem2,self.startDate,self.endDate)
+        
         ratio = anem1/anem2
         return ratio
 
@@ -218,15 +219,28 @@ class ClassicAnalyses():
 
     def compute_linear_regression(self,measure1,measure2,readData=True):
         """
-
+        Fits a linear model to 2-D data
 
         Parameters
         ----------
-
+        measure1: Str or Array of floats
+            fieldname of measure 1 or array of values
+        measure2: Str or Array of floats
+            fieldname of measure 2 or array of values
+        readData: Boolean
+            if passing data instead of fieldnames, set this to False.
 
         Returns
         -------
-
+        Dictionary
+            keys:
+                - parameters: tuple linear model coefficient and intercept
+                - r2: r squared (coeff of determination)
+                - mse: mean square error
+                - r: coefficient of correlation
+                - residuals: residuals from (predicted - traininig data)
+                - measure1: values of measure 1
+                - measure2: values of measure 2
 
         """
         from sklearn import datasets, linear_model
@@ -254,4 +268,66 @@ class ClassicAnalyses():
 
         return {'params':params,'r2':r2,'mse':mse, 'r':r,'residuals':residuals,\
                 'measure1':measure1,'measure2':measure2}
+
+
+
+    def compute_horizontal_wind_magnitude(self,U,V,readData=True):
+        """
+        Compute the horizontal wind magnitude (X-Y plane) from an ultrasonic sensor
+
+        Parameters
+        ----------
+        U: Str or array of floats
+            Wind speed in X direction
+        V: Str or array of floats
+            Wind speed in Y direction
+
+        readData: Boolean
+            if passing data instead of fieldnames, set this to False.
+
+        Returns
+        -------
+        horMagnitude: Pandas Series
+            Time series of wind speed magnitude
+
+        """
+        if readData:
+            U = self.reader.get_timeseries(U,self.startDate,self.endDate)
+            V = self.reader.get_timeseries(V,self.startDate,self.endDate)
+        horMagnitude = np.sqrt(U**2 + V**2)
+
+        return horMagnitude
+
+    def compute_off_axis_angle(self,U=None,V=None,W=None,horMagnitude=None,readData=True):
+        """
+        Computes angle of the horMagnitude relative to the X-Y plane
+
+        Parameters
+        ----------
+         U: Str or array of floats
+            Wind speed in X direction (optional)
+         V: Str or array of floats
+            Wind speed in Y direction (optional)
+        horMagnitude: Pandas series or array of floats
+            if U and V are not given, then give horMagnitude
+        readData: Boolean
+            if passing data instead of fieldnames, set this to False.
+
+
+
+        Returns
+        -------
+        offAxisAngel: Pandas Series or Array
+
+        """
+        if not horMagnitude:
+            horMagnitude = self.compute_horizontal_wind_magnitude(U,V,readData)
+
+        if readData:
+            W = self.reader.get_timeseries(W,self.startDate,self.endDate)
+
+        offAxisAngle = 90 - np.arctan(horMagnitude.values,W.values)*180/np.pi
+
+        return offAxisAngle
+
 

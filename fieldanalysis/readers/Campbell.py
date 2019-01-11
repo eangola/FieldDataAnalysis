@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 09-01-2019
-Last Modified : Thu 10 Jan 2019 01:21:57 PM EST
+Last Modified : Fri 11 Jan 2019 02:18:12 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
@@ -16,11 +16,12 @@ class Campbell(SymPro):
 
     Parameters
     ----------
-
+    filename: str
+        path to file
 
     Returns
     -------
-
+    Initializes Campbell reader object
 
     """
 
@@ -33,6 +34,9 @@ class Campbell(SymPro):
         self.names = None
 
     def _read_data(self,header=None,sep=","):
+        """
+        Private method reads data from Campbell file into pandas data frame
+        """
         data = super(Campbell, self)._read_data(sep = sep)
         data = data.rename({'TIMESTAMP':'Timestamp'},axis='columns')
         data = data.replace('NAN',np.nan)

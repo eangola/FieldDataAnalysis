@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Wed 02 Jan 2019 05:14:36 PM EST
+Last Modified : Fri 11 Jan 2019 02:25:41 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -14,15 +14,11 @@ class ClassicFilters():
 
     Parameters
     ----------
-
+    reader: reader object from fieldanalysis.reader module
 
     Returns
     -------
-
-
-    Examples
-    --------
-    >>>
+    Initializes ClassicFilter object to be applied to analysis
 
     """
 
@@ -48,24 +44,12 @@ class ClassicFilters():
             self.filtersDict['icing'] = icingFilter
 
 
-    def generate_windspeed_filter(self,wsRef=None,wsThreshold = 3):
+    def generate_windspeed_filter(self,wsRef=None,wsThreshold = 3,readData=True):
         """
-
-
-        Parameters
-        ----------
-
-
-        Returns
-        -------
-
-
-        Examples
-        --------
-        >>>
-
+        Generate wind speed filter setting a predefined threshold
         """
-        wsRef = self.reader.get_data(wsRef)
+        if readData:
+            wsRef = self.reader.get_data(wsRef)
         if self.filtersDict['windspeed'].empty:
             windspeedFilter = (wsRef >= wsThreshold)
             self.filtersDict['windspeed'] = windspeedFilter
@@ -78,20 +62,7 @@ class ClassicFilters():
 
     def generate_best_sector_filter(self,degRef=None,boom=None,bestSector=30):
         """
-
-
-        Parameters
-        ----------
-
-
-        Returns
-        -------
-
-
-        Examples
-        --------
-        >>>
-
+        Generates best sector filter given best sector angle and boom angles
         """
 
         degRef = self.reader.get_data(degRef)
@@ -100,20 +71,11 @@ class ClassicFilters():
         if self.filtersDict['bestsector'].empty:
             bestsectorFilter = ((degRef >= sector[0]) & (degRef <= sector[1]))
             self.filtersDict['bestsector'] = bestsectorFilter
-        
 
 
     def clear_all_filters(self):
         """
         Restarts the object, clearing all generated filters
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
 
         """
         self.__init__(self.reader)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Tue 08 Jan 2019 02:36:11 PM EST
+Last Modified : Fri 11 Jan 2019 02:28:51 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -10,19 +10,15 @@ import numpy as np
 
 class ClassicPlotter():
     """
-
+    Contains methods to generate classic analyses plots
 
     Parameters
     ----------
-
+    analyses: analyses object from fieldanalysis.analyses module
 
     Returns
     -------
-
-
-    Examples
-    --------
-    >>>
+    Initializes ClassicPlotter object
 
     """
 
@@ -30,6 +26,9 @@ class ClassicPlotter():
         self.analyses = analyses
 
     def plot_scatter(self,x=None,y=None,newFig=True):
+        """
+        generates scatter plot
+        """
         if newFig:
             plt.figure()
         plt.scatter(x,y,s=1)
@@ -64,20 +63,7 @@ class ClassicPlotter():
 
     def plot_linear_regression(self,measure1,measure2,readData=True):
         """
-
-
-        Parameters
-        ----------
-
-
-        Returns
-        -------
-
-
-        Examples
-        --------
-        >>>
-
+        Generates linear regression plot with residuals plot
         """
         results = self.analyses.compute_linear_regression(measure1,\
                 measure2,readData)
@@ -94,7 +80,7 @@ class ClassicPlotter():
         fig, axs = plt.subplots(nrows=2, ncols=1)
         axs[0].plot(np.linspace(min(a),max(a),1000),y)
         axs[0].set_title('linear regression')
-        axs[0].scatter(a,b)
+        axs[0].scatter(a,b,s=1)
         #create string for results
         textstr = '\n'.join((r'$\mathrm{r^2}=%.2f$' % (r2, ),\
                 r'$\mathrm{mse}=%.2f$' % (mse, ),\
@@ -104,7 +90,7 @@ class ClassicPlotter():
         #axs[0].set_ylim(min(b)-10,max(b)*1.1)
         axs[1].plot([min(b),max(b)],[0,0])
         axs[1].set_title('residuals')
-        axs[1].plot(b,res,'.')
+        axs[1].scatter(b,res,s=1)
         plt.tight_layout()
 
 
