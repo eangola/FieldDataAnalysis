@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: class ClassicAnalyses</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>fieldanalysis.analyses.ClassicAnalyses</strong> = <a name="fieldanalysis.analyses.ClassicAnalyses">class ClassicAnalyses</a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Methods&nbsp;can&nbsp;be&nbsp;applied&nbsp;to&nbsp;mast&nbsp;data<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+reader:&nbsp;fieldanalysis.reader&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;source&nbsp;reader<br>
+startDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;to&nbsp;start&nbsp;analysis<br>
+endDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;date&nbsp;to&nbsp;end&nbsp;analysis<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ClassicAnalyses-__init__"><strong>__init__</strong></a>(self, reader=None, startDate=None, endDate=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_TI"><strong>compute_TI</strong></a>(self, anemAvg=None, anemSD=None, readData=True)</dt><dd><tt>Computes&nbsp;TI&nbsp;for&nbsp;one&nbsp;anemometer<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+anemAvg&nbsp;=&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anemometer&nbsp;average&nbsp;fieldname<br>
+anemSD&nbsp;=&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anemometer&nbsp;standard&nbsp;deviation&nbsp;fieldname<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+TI&nbsp;=&nbsp;Float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;turbulence&nbsp;intensity<br>
+&nbsp;<br>
+Examples<br>
+--------</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_bias"><strong>compute_bias</strong></a>(self, sensor1=None, sensor2=None, readData=True)</dt><dd><tt>Compute&nbsp;bias&nbsp;of&nbsp;two&nbsp;sensors<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sensor1&nbsp;=&nbsp;Str&nbsp;or&nbsp;Pandas&nbsp;Series<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sensor1&nbsp;average&nbsp;fieldname&nbsp;or&nbsp;series<br>
+sensor2&nbsp;=&nbsp;Str&nbsp;or&nbsp;Pandas&nbsp;Series<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sensor2&nbsp;fieldname&nbsp;or&nbsp;series<br>
+readData&nbsp;=&nbsp;bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;true&nbsp;if&nbsp;passing&nbsp;fieldnames,&nbsp;False&nbsp;if&nbsp;passing&nbsp;data&nbsp;series<br>
+&nbsp;<br>
+Returns<br>
+-------</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_binned_TI"><strong>compute_binned_TI</strong></a>(self, anemAvg, anemSD, bins, binBy, meanTI=False)</dt><dd><tt>Computes&nbsp;binned&nbsp;TI<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sensorAvg:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;for&nbsp;sensor&nbsp;average<br>
+sensorSD:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;for&nbsp;sensor&nbsp;SD<br>
+bins:&nbsp;List<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;containing&nbsp;bins<br>
+binBy:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;of&nbsp;metric&nbsp;to&nbsp;bin&nbsp;by<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+binnedTI:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;containing&nbsp;the&nbsp;binned&nbsp;TI</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_binned_bias"><strong>compute_binned_bias</strong></a>(self, sensor1, sensor2, bins, binBy, meanBias=False)</dt><dd><tt>Computes&nbsp;binned&nbsp;TI<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+sensor1:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;for&nbsp;sensor&nbsp;1<br>
+sensor2:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;for&nbsp;sensor&nbsp;2<br>
+bins:&nbsp;List<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;containing&nbsp;bins<br>
+binBy:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;of&nbsp;metric&nbsp;to&nbsp;bin&nbsp;by<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+binnedBias:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;containing&nbsp;the&nbsp;binned&nbsp;bias</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_horizontal_wind_magnitude"><strong>compute_horizontal_wind_magnitude</strong></a>(self, U, V, readData=True)</dt><dd><tt>Compute&nbsp;the&nbsp;horizontal&nbsp;wind&nbsp;magnitude&nbsp;(X-Y&nbsp;plane)&nbsp;from&nbsp;an&nbsp;ultrasonic&nbsp;sensor<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+U:&nbsp;Str&nbsp;or&nbsp;array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Wind&nbsp;speed&nbsp;in&nbsp;X&nbsp;direction<br>
+V:&nbsp;Str&nbsp;or&nbsp;array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Wind&nbsp;speed&nbsp;in&nbsp;Y&nbsp;direction<br>
+&nbsp;<br>
+readData:&nbsp;Boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;passing&nbsp;data&nbsp;instead&nbsp;of&nbsp;fieldnames,&nbsp;set&nbsp;this&nbsp;to&nbsp;False.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+horMagnitude:&nbsp;Pandas&nbsp;Series<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;series&nbsp;of&nbsp;wind&nbsp;speed&nbsp;magnitude</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_linear_regression"><strong>compute_linear_regression</strong></a>(self, measure1, measure2, readData=True)</dt><dd><tt>Fits&nbsp;a&nbsp;linear&nbsp;model&nbsp;to&nbsp;2-D&nbsp;data<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+measure1:&nbsp;Str&nbsp;or&nbsp;Array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;of&nbsp;measure&nbsp;1&nbsp;or&nbsp;array&nbsp;of&nbsp;values<br>
+measure2:&nbsp;Str&nbsp;or&nbsp;Array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;of&nbsp;measure&nbsp;2&nbsp;or&nbsp;array&nbsp;of&nbsp;values<br>
+readData:&nbsp;Boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;passing&nbsp;data&nbsp;instead&nbsp;of&nbsp;fieldnames,&nbsp;set&nbsp;this&nbsp;to&nbsp;False.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Dictionary<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;parameters:&nbsp;tuple&nbsp;linear&nbsp;model&nbsp;coefficient&nbsp;and&nbsp;intercept<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;r2:&nbsp;r&nbsp;squared&nbsp;(coeff&nbsp;of&nbsp;determination)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;mse:&nbsp;mean&nbsp;square&nbsp;error<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;r:&nbsp;coefficient&nbsp;of&nbsp;correlation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;residuals:&nbsp;residuals&nbsp;from&nbsp;(predicted&nbsp;-&nbsp;traininig&nbsp;data)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;measure1:&nbsp;values&nbsp;of&nbsp;measure&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;measure2:&nbsp;values&nbsp;of&nbsp;measure&nbsp;2</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_off_axis_angle"><strong>compute_off_axis_angle</strong></a>(self, U=None, V=None, W=None, horMagnitude=None, readData=True)</dt><dd><tt>Computes&nbsp;angle&nbsp;of&nbsp;the&nbsp;horMagnitude&nbsp;relative&nbsp;to&nbsp;the&nbsp;X-Y&nbsp;plane<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;U:&nbsp;Str&nbsp;or&nbsp;array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Wind&nbsp;speed&nbsp;in&nbsp;X&nbsp;direction&nbsp;(optional)<br>
+&nbsp;V:&nbsp;Str&nbsp;or&nbsp;array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Wind&nbsp;speed&nbsp;in&nbsp;Y&nbsp;direction&nbsp;(optional)<br>
+horMagnitude:&nbsp;Pandas&nbsp;series&nbsp;or&nbsp;array&nbsp;of&nbsp;floats<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;U&nbsp;and&nbsp;V&nbsp;are&nbsp;not&nbsp;given,&nbsp;then&nbsp;give&nbsp;horMagnitude<br>
+readData:&nbsp;Boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;passing&nbsp;data&nbsp;instead&nbsp;of&nbsp;fieldnames,&nbsp;set&nbsp;this&nbsp;to&nbsp;False.<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+offAxisAngel:&nbsp;Pandas&nbsp;Series&nbsp;or&nbsp;Array</tt></dd></dl>
+
+<dl><dt><a name="ClassicAnalyses-compute_ws_ratio"><strong>compute_ws_ratio</strong></a>(self, anem1=None, anem2=None, readData=True)</dt><dd><tt>Computes&nbsp;wind&nbsp;speed&nbsp;ratio&nbsp;between&nbsp;two&nbsp;anemometers<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+anem1:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anemometer&nbsp;1&nbsp;average&nbsp;fieldname<br>
+anem2:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;anemometer&nbsp;2&nbsp;average&nbsp;fieldname<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+ratio:&nbsp;Pandas&nbsp;Series<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Timeseries&nbsp;of&nbsp;the&nbsp;computed&nbsp;ratio</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table>
+</body></html>

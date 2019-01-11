@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: class Campbell</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>fieldanalysis.readers.Campbell</strong> = <a name="fieldanalysis.readers.Campbell">class Campbell</a>(<a href="fieldanalysis.readers.SymPro.html#SymPro">fieldanalysis.readers.SymPro.SymPro</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Reads&nbsp;data&nbsp;from&nbsp;campbell&nbsp;logger&nbsp;programmed&nbsp;by&nbsp;Henry&nbsp;Bush&nbsp;this&nbsp;class<br>
+inherits&nbsp;from&nbsp;SymPro<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+filename:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;to&nbsp;file<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Initializes&nbsp;Campbell&nbsp;reader&nbsp;object<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="fieldanalysis.readers.Campbell.html#Campbell">Campbell</a></dd>
+<dd><a href="fieldanalysis.readers.SymPro.html#SymPro">fieldanalysis.readers.SymPro.SymPro</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Campbell-__init__"><strong>__init__</strong></a>(self, filename)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="fieldanalysis.readers.SymPro.html#SymPro">fieldanalysis.readers.SymPro.SymPro</a>:<br>
+<dl><dt><a name="Campbell-apply_filters"><strong>apply_filters</strong></a>(self, filters)</dt><dd><tt>Applies&nbsp;filter&nbsp;object&nbsp;to&nbsp;data<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+filters:&nbsp;Filter&nbsp;object<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+None</tt></dd></dl>
+
+<dl><dt><a name="Campbell-get_data"><strong>get_data</strong></a>(self, fieldname, startDate=None, endDate=None)</dt><dd><tt>Retrieve&nbsp;dataframe<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fieldname:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Fieldname&nbsp;of&nbsp;column&nbsp;to&nbsp;retrieve<br>
+startDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;date,&nbsp;if&nbsp;None,&nbsp;returs&nbsp;all&nbsp;values<br>
+endDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;date,&nbsp;if&nbsp;None,&nbsp;returns&nbsp;all&nbsp;values<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Dataframe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Pandas&nbsp;dataframe&nbsp;of&nbsp;requested&nbsp;data&nbsp;column</tt></dd></dl>
+
+<dl><dt><a name="Campbell-get_fieldname"><strong>get_fieldname</strong></a>(self, channel=None, metric=None)</dt><dd><tt>Parameters<br>
+----------<br>
+channel:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Channel&nbsp;to&nbsp;look&nbsp;for&nbsp;Ex.&nbsp;'Ch1'<br>
+metric:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;metric&nbsp;to&nbsp;look&nbsp;for&nbsp;Ex.&nbsp;'Avg'<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+fieldname:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fieldname&nbsp;in&nbsp;symph.&nbsp;pro<br>
+None:&nbsp;if&nbsp;fieldname&nbsp;is&nbsp;not&nbsp;found</tt></dd></dl>
+
+<dl><dt><a name="Campbell-get_fieldnames"><strong>get_fieldnames</strong></a>(self)</dt><dd><tt>Returns&nbsp;all&nbsp;keys&nbsp;(fieldnames)&nbsp;for&nbsp;data&nbsp;columns</tt></dd></dl>
+
+<dl><dt><a name="Campbell-get_info"><strong>get_info</strong></a>(self, channel)</dt><dd><tt>Retrieves&nbsp;info&nbsp;of&nbsp;sensor&nbsp;in&nbsp;tower<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+channel:&nbsp;Int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Sensor&nbsp;channel<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+info:&nbsp;Dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keys:&nbsp;sType,height,brand,sNumber,scale,offset<br>
+&nbsp;&nbsp;&nbsp;&nbsp;values:&nbsp;Strings</tt></dd></dl>
+
+<dl><dt><a name="Campbell-get_timeseries"><strong>get_timeseries</strong></a>(self, fieldname, startDate=None, endDate=None)</dt><dd><tt>Retrieve&nbsp;pandas&nbsp;time-series&nbsp;of&nbsp;specified&nbsp;data&nbsp;column<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+fieldname:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Fieldname&nbsp;of&nbsp;column&nbsp;to&nbsp;retrieve<br>
+startDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;date,&nbsp;if&nbsp;None,&nbsp;returs&nbsp;all&nbsp;values<br>
+endDate:&nbsp;Str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;date,&nbsp;if&nbsp;None,&nbsp;returns&nbsp;all&nbsp;values<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+Timeseries:&nbsp;Pandas&nbsp;time-series<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Pandas&nbsp;time-series&nbsp;of&nbsp;requested&nbsp;data&nbsp;column</tt></dd></dl>
+
+<dl><dt><a name="Campbell-remove_filters"><strong>remove_filters</strong></a>(self)</dt><dd><tt>Remove&nbsp;all&nbsp;filters&nbsp;from&nbsp;data</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="fieldanalysis.readers.SymPro.html#SymPro">fieldanalysis.readers.SymPro.SymPro</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table>
+</body></html>
