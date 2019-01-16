@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 11 Jan 2019 02:15:42 PM EST
+Last Modified : Wed 16 Jan 2019 03:20:01 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -217,7 +217,7 @@ class ClassicAnalyses():
         return group
 
 
-    def compute_linear_regression(self,measure1,measure2,readData=True):
+    def compute_linear_regression(self,measure1,measure2,readData=True,estimate=None):
         """
         Fits a linear model to 2-D data
 
@@ -261,13 +261,15 @@ class ClassicAnalyses():
         params = (regr.coef_[0],regr.intercept_)
 
         predict = regr.predict(measure1)
+        if estimate:
+            prediction = regr.predict(estimate)
         r2 = r2_score(measure2,predict) #coefficient of determination, explained variance
         mse = mean_squared_error(measure2,predict,multioutput='raw_values')
 
         residuals = measure2 - predict
 
         return {'params':params,'r2':r2,'mse':mse, 'r':r,'residuals':residuals,\
-                'measure1':measure1,'measure2':measure2}
+                'measure1':measure1,'measure2':measure2,'prediction':prediction}
 
 
 
