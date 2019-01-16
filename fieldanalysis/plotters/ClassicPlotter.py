@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Tue 15 Jan 2019 06:49:52 PM EST
+Last Modified : Wed 16 Jan 2019 06:14:20 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -110,7 +110,7 @@ class ClassicPlotter():
             print("Channel %d S.N. %s and Channel %d S.N. %s" %(channels[0],sNumbers[0],channels[1],sNumbers[1]))
 
 
-    def plot_linear_regression(self,measure1,measure2,readData=True,title='',xlabel='',ylabel=''):
+    def plot_linear_regression(self,measure1,measure2,readData=True,estimate=None,title='',xlabel='',ylabel=''):
         """
 
         Generates linear regression plot with residuals plot
@@ -134,7 +134,7 @@ class ClassicPlotter():
         """
 
         results = self.analyses.compute_linear_regression(measure1,\
-                measure2,readData)
+                measure2,readData,estimate=estimate)
 
         a = results['measure1']
         b = results['measure2']
@@ -143,10 +143,11 @@ class ClassicPlotter():
         mse = results['mse']
         params = results['params']
         res = results['residuals']
+        predicted = results['predicted']
         #define y for plot
         y = np.linspace(min(a),max(a),1000)*params[0] + params[1]
         fig, axs = plt.subplots(nrows=2, ncols=1)
-        axs[0].plot(np.linspace(min(a),max(a),1000),y)
+        axs[0].plot(np.linspace(min(a),max(a),1000),y,color='red')
         axs[0].set_title('linear regression '+title,fontweight='bold')
         axs[0].set_xlabel(xlabel,fontweight='bold')
         axs[0].set_ylabel(ylabel,fontweight='bold')
@@ -158,11 +159,11 @@ class ClassicPlotter():
         axs[0].text(0.9, 0.78,textstr,horizontalalignment='center',\
                 verticalalignment='center',transform = axs[0].transAxes)
         #axs[0].set_ylim(min(b)-10,max(b)*1.1)
-        axs[1].plot([min(b),max(b)],[0,0])
+        axs[1].plot([min(predicted),max(predicted)],[0,0],color='red')
         axs[1].set_title('Residuals plot '+title,fontweight = 'bold')
-        axs[1].set_xlabel(ylabel,fontweight='bold')
+        axs[1].set_xlabel('predicted '+ylabel,fontweight='bold')
         axs[1].set_ylabel('Residuals',fontweight='bold')
-        axs[1].scatter(b,res,s=1)
+        axs[1].scatter(predicted,res,s=1)
         plt.tight_layout()
 
 
