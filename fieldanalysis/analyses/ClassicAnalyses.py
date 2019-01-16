@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Wed 16 Jan 2019 03:20:01 PM EST
+Last Modified : Wed 16 Jan 2019 06:01:30 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -251,7 +251,7 @@ class ClassicAnalyses():
             measure2 = self.reader.get_timeseries(measure2,self.startDate,self.endDate)
 
         r = np.corrcoef(measure1,measure2)[0,1] #correlation coefficient
-        
+
         measure1 = measure1.values.reshape(len(measure1),1)
         measure2 = measure2.values.reshape(len(measure2),1)
 
@@ -262,7 +262,9 @@ class ClassicAnalyses():
 
         predict = regr.predict(measure1)
         if estimate:
-            prediction = regr.predict(estimate)
+            prediction = regr.predict(np.asarray(estimate).reshape(-1,1))
+        else:
+            prediction = None
         r2 = r2_score(measure2,predict) #coefficient of determination, explained variance
         mse = mean_squared_error(measure2,predict,multioutput='raw_values')
 
