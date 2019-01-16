@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Tue 15 Jan 2019 06:46:35 PM EST
+Last Modified : Tue 15 Jan 2019 06:49:52 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
 import seaborn as sns
 import numpy as np
+from scipy import stats
 
 class ClassicPlotter():
     """
@@ -58,11 +59,20 @@ class ClassicPlotter():
         mean = np.mean(x)
         stdev = np.std(x)
         median = np.median(x)
+        kurtosis = stats.kurtosis(x)
+        skew = stats.skew(x)
         textstr = '\n'.join(('mean =%.2f' % (mean, ),\
                 'median = %.2f' % (median, ),\
                 'stdev=%.2f' % (stdev, )))
+
+        textstr2 = '\n'.join(('kurtosis =%.2f' % (kurtosis, ),\
+                'skewness = %.2f' % (skew, )))
+
         axs.text(0.9, 0.78,textstr,horizontalalignment='center',\
                 verticalalignment='center',transform=axs.transAxes)
+        axs.text(0.2, 0.78,textstr2,horizontalalignment='center',\
+                verticalalignment='center',transform=axs.transAxes)
+
         axs.set_title('Histogram of bias at ' + title,fontweight='bold')
         axs.set_ylabel('Frequency',fontweight='bold')
         axs.set_xlabel(xlabel,fontweight='bold')
