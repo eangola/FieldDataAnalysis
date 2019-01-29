@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Wed 16 Jan 2019 06:14:20 PM EST
+Last Modified : Tue 29 Jan 2019 02:19:07 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -23,9 +23,10 @@ class ClassicPlotter():
 
     """
 
-    def __init__(self,analyses):
+    def __init__(self,analyses,startDate=None,endDate=None):
         self.analyses = analyses
-        
+        self.startDate = startDate
+        self.endDate = endDate
 
     def plot_scatter(self,x=None,y=None,newFig=True,title=''):
         """
@@ -73,7 +74,7 @@ class ClassicPlotter():
         axs.text(0.2, 0.78,textstr2,horizontalalignment='center',\
                 verticalalignment='center',transform=axs.transAxes)
 
-        axs.set_title('Histogram of bias at ' + title,fontweight='bold')
+        axs.set_title('Histogram ' + title,fontweight='bold')
         axs.set_ylabel('Frequency',fontweight='bold')
         axs.set_xlabel(xlabel,fontweight='bold')
 
@@ -154,7 +155,7 @@ class ClassicPlotter():
         axs[0].scatter(a,b,s=1)
         #create string for results
         textstr = '\n'.join((r'$\mathrm{r^2}=%.2f$' % (r2, ),\
-                r'$\mathrm{mse}=%.2f$' % (mse, ),\
+                r'$\mathrm{mse}=%.4f$' % (mse, ),\
                 r'$\mathrm{r}=%.2f$' % (r, )))
         axs[0].text(0.9, 0.78,textstr,horizontalalignment='center',\
                 verticalalignment='center',transform = axs[0].transAxes)
@@ -169,4 +170,19 @@ class ClassicPlotter():
 
         return results
 
+
+    def plot_windrose(self,windSpeed,windDirection,readData=True):
+        """
+        Plot Windrose
+        """
+        from windrose import WindroseAxes
+        import matplotlib.cm as cm
+
+        if readData:
+            windSpeed = self.analyses.reader.get_data(windSpeed,self.startDate,self.endDate)
+            windDirection = self.analyses.reader.get_data(windDirection,self.startDate,self.endDate)
+
+        ax = WindroseAxes.from_ax()
+        ax.bar(windDirection,windSpeed,normed=True,opening = 0.8, edgecolor='white')
+        ax.set_legend()
 
