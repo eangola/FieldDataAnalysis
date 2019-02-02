@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Wed 16 Jan 2019 06:01:30 PM EST
+Last Modified : Wed 16 Jan 2019 06:11:14 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -241,6 +241,8 @@ class ClassicAnalyses():
                 - residuals: residuals from (predicted - traininig data)
                 - measure1: values of measure 1
                 - measure2: values of measure 2
+                - predicted: predicted values for measure 2
+                - estimate: predicted value for single test value
 
         """
         from sklearn import datasets, linear_model
@@ -265,13 +267,14 @@ class ClassicAnalyses():
             prediction = regr.predict(np.asarray(estimate).reshape(-1,1))
         else:
             prediction = None
+
         r2 = r2_score(measure2,predict) #coefficient of determination, explained variance
         mse = mean_squared_error(measure2,predict,multioutput='raw_values')
 
         residuals = measure2 - predict
 
         return {'params':params,'r2':r2,'mse':mse, 'r':r,'residuals':residuals,\
-                'measure1':measure1,'measure2':measure2,'prediction':prediction}
+                'measure1':measure1,'measure2':measure2,'predicted':predict,'estimate':prediction}
 
 
 
