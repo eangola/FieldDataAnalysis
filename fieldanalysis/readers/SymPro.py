@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Fri 11 Jan 2019 02:23:20 PM EST
+Last Modified : Fri 01 Feb 2019 09:12:28 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -39,6 +39,17 @@ class SymPro():
             header = self._find_header()
         data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
         return data
+
+    def convert_to_spark_dataFrame(self):
+        """
+        Convert the data to a spark data frame
+        """
+        from pyspark.sql import SQLContext
+        sqlContext = SQLContext(sc)
+        sparkDataFrame = sqlContext.createDataFrame(self.data)
+
+        return sparkDataFrame
+
 
     def _find_header(self,delimiter='timestamp'):
         """
