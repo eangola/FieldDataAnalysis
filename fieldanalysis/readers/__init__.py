@@ -7,5 +7,5 @@ Current Support:
 """
 
 from fieldanalysis.readers.SymPro import SymPro
-
+from fieldanalysis.readers.Fusion import Fusion
 from fieldanalysis.readers.Campbell import Campbell

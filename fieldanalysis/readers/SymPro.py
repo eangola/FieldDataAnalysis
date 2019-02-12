@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Fri 01 Feb 2019 09:12:28 PM EST
+Last Modified : Mon 04 Feb 2019 07:56:01 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -30,6 +30,8 @@ class SymPro():
         self.filename = filename
         self.data = self._read_data()
         self.nonFilteredData = self.data
+        self.sqlContext = None
+        self.sc = None    #Spark Context
 
     def _read_data(self,header=None,sep="\t"):
         """
@@ -40,13 +42,24 @@ class SymPro():
         data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
         return data
 
+    def _create_sql_context(self):
+        """
+        creates an sql context
+        """
+        from pyspark.sql import SQLContext
+        from pyspark import SparkConf,SparkContext
+        from pyspark.sql import SQLContext
+        conf = SparkConf().setAppName("convert to spark")
+        self.sc = SparkContext(conf=conf)
+        self.sqlContext = SQLContext(self.sc)
+
     def convert_to_spark_dataFrame(self):
         """
         Convert the data to a spark data frame
         """
-        from pyspark.sql import SQLContext
-        sqlContext = SQLContext(sc)
-        sparkDataFrame = sqlContext.createDataFrame(self.data)
+        if self.sqlContext == None:
+            self._create_sql_context()
+        sparkDataFrame = self.sqlContext.createDataFrame(self.data)
 
         return sparkDataFrame
 
