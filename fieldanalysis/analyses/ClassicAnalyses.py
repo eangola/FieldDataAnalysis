@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Wed 16 Jan 2019 06:11:14 PM EST
+Last Modified : Thu 14 Feb 2019 03:03:23 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -337,4 +337,34 @@ class ClassicAnalyses():
 
         return offAxisAngle
 
+    def compute_welch_spectra(self,measure,fs,readData=True,**kwargs):
+        """
+        Computes the power spectral density of power spectrum of wind speed (measure)
 
+        Parameters
+        ----------
+        measure: Str or array of floats
+            Wind speed to compute welch spectra
+        fs: float
+            sampling frequency of the measure time series in units of Hz
+        **kwargs: key arguments
+            any key arguments that the scipy.signal.welch function takes
+
+        Returns
+        -------
+        freq: ndarray
+            array of frequencies
+        dens: ndarray
+            Power spectral density of power spectrum of measure
+
+        Examples
+        --------
+
+        """
+        from scipy.signal import welch
+        if readData:
+            measure = self.reader.get_timeseries(measure,self.startDate,self.endDate)
+
+        freq,dens = welch(measure,fs,**kwargs)
+
+        return freq,dens
