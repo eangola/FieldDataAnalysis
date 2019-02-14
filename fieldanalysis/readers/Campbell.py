@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 09-01-2019
-Last Modified : Fri 11 Jan 2019 02:18:12 PM EST
+Last Modified : Thu 14 Feb 2019 02:55:43 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
@@ -42,6 +42,7 @@ class Campbell(SymPro):
         data = data.replace('NAN',np.nan)
         #data = data.dropna()
         data.loc[:,data.columns != 'Timestamp'] = data.loc[:,data.columns != 'Timestamp'].astype(float)
+        data.set_index('Timestamp')
         return data
 
     def _find_header(self,delimiter='rn'):

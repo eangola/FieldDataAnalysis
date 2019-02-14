@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Mon 04 Feb 2019 07:56:01 PM EST
+Last Modified : Thu 14 Feb 2019 02:56:07 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
 import pdb
 import numpy as np
+
 
 class SymPro():
     """
@@ -25,6 +26,7 @@ class SymPro():
 
     def __init__(self,filename):
 
+
         self.names=None
         self.header = None
         self.filename = filename
@@ -40,6 +42,7 @@ class SymPro():
         if not header:
             header = self._find_header()
         data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
+        data = data.set_index('Timestamp')
         return data
 
     def _create_sql_context(self):
@@ -88,37 +91,6 @@ class SymPro():
                     self.header.append(line.split())
                     headerEnd += 1
 
-    def get_data(self,fieldname,startDate=None,endDate=None):
-
-        """
-        Retrieve dataframe
-
-        Parameters
-        ----------
-        fieldname: Str
-            Fieldname of column to retrieve
-        startDate: Str
-            start date, if None, returs all values
-        endDate: Str
-            end date, if None, returns all values
-
-        Returns
-        -------
-        Dataframe
-            Pandas dataframe of requested data column
-
-        """
-
-        if startDate == None:
-            startDate = self.data['Timestamp'].iloc[0]
-        if endDate == None:
-            endDate = self.data['Timestamp'].iloc[-1]
-
-        timeseries = self.data[fieldname][(self.data['Timestamp'] >= startDate) &\
-                (self.data['Timestamp'] <= endDate)]
-
-        return self.data[fieldname]
-
     def get_fieldnames(self):
         """
         Returns all keys (fieldnames) for data columns
@@ -147,15 +119,13 @@ class SymPro():
         """
 
         if startDate == None:
-            startDate = self.data['Timestamp'].iloc[0]
+            startDate = self.data.index[0]
         if endDate == None:
-            endDate = self.data['Timestamp'].iloc[-1]
+            endDate = self.data.index[-1]
 
-        timeseries = self.data[['Timestamp',fieldname]][(self.data['Timestamp'] >= startDate) &\
-                (self.data['Timestamp'] <= endDate)]
+        timeseries = self.data[fieldname][(self.data.index >= startDate) &\
+                (self.data.index <= endDate)]
 
-        timeseries = pd.Series(np.array(timeseries[fieldname]),index=\
-                pd.DatetimeIndex(timeseries['Timestamp']))
         return timeseries
 
     def apply_filters(self,filters):
