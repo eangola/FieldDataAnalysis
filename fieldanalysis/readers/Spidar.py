@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
 Created : 13-02-2019
-Last Modified : Wed 13 Feb 2019 08:48:04 PM EST
+Last Modified : Wed 13 Feb 2019 09:09:08 PM EST
 Created By : Enrique D. Angola
 """
+from fieldanalysis.readers import SymPro
 import pandas as pd
-import pdb
 import numpy as np
 
 class Spidar(SymPro):
@@ -23,13 +23,12 @@ class Spidar(SymPro):
 
     """
 
-    def __init__(self,arg):
+    def __init__(self,filename):
+        super().__init__(filename)
 
-
-    def _read_data(self,arg):
+    def _read_data(self):
         with open(self.filename,'r') as f:
             data = pd.read_csv(f)
 
         data = data.set_index('Timestamp')
         return data
-        return x
