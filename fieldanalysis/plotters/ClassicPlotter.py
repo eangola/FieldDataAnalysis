@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Tue 29 Jan 2019 02:19:07 PM EST
+Last Modified : Thu 14 Feb 2019 05:01:27 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -36,7 +36,6 @@ class ClassicPlotter():
             plt.figure()
         plt.scatter(x,y,s=1)
         plt.title(title,fontweight='bold')
-    
 
     def plot_histogram(self,x=None,title='',bins=50,channels=None,sNumbers = None,xlabel=''):
         """
@@ -179,10 +178,37 @@ class ClassicPlotter():
         import matplotlib.cm as cm
 
         if readData:
-            windSpeed = self.analyses.reader.get_data(windSpeed,self.startDate,self.endDate)
-            windDirection = self.analyses.reader.get_data(windDirection,self.startDate,self.endDate)
+            windSpeed = self.analyses.reader.get_timeseries(windSpeed,self.startDate,self.endDate)
+            windDirection = self.analyses.reader.get_timeseries(windDirection,self.startDate,self.endDate)
 
         ax = WindroseAxes.from_ax()
         ax.bar(windDirection,windSpeed,normed=True,opening = 0.8, edgecolor='white')
         ax.set_legend()
+
+
+    def plot_spectra(self,measure,fs,readData=True,**kwargs):
+        """
+
+
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+
+
+        Examples
+        --------
+        >>>
+
+        """
+        freq,den = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
+        ax = plt.subplot(1,1,1)
+        ax.set_xscale('log')
+        ax.set_yscale('log')
+        ax.plot(freq,den)
+        ax.set_xlabel('frequency [Hz]')
+        ax.set_ylabel('U*S(t)(L^3/T^2)')
+        ax.grid(True,which="both",ls="-")
 
