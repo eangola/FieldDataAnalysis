@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 05-12-2018
-Last Modified : Fri 11 Jan 2019 02:25:41 PM EST
+Last Modified : Thu 14 Feb 2019 07:21:18 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -36,8 +36,8 @@ class ClassicFilters():
         generate an icing filter given temperature and vane
         SD field.
         '''
-        temp = self.reader.get_data(temp)
-        vaneSD = self.reader.get_data(vaneSD)
+        temp = self.reader.get_timeseries(temp)
+        vaneSD = self.reader.get_timeseries(vaneSD)
         if self.filtersDict['icing'].empty:
             icingFilter = ((temp >= tempThreshold) &\
                     (vaneSD >= vaneSDThreshold))
@@ -49,7 +49,7 @@ class ClassicFilters():
         Generate wind speed filter setting a predefined threshold
         """
         if readData:
-            wsRef = self.reader.get_data(wsRef)
+            wsRef = self.reader.get_timeseries(wsRef)
         if self.filtersDict['windspeed'].empty:
             windspeedFilter = (wsRef >= wsThreshold)
             self.filtersDict['windspeed'] = windspeedFilter
@@ -65,7 +65,7 @@ class ClassicFilters():
         Generates best sector filter given best sector angle and boom angles
         """
 
-        degRef = self.reader.get_data(degRef)
+        degRef = self.reader.get_timeseries(degRef)
         center = (boom[0]+boom[1])/2
         sector = [center - bestSector/2, center + bestSector/2]
         if self.filtersDict['bestsector'].empty:
