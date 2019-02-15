@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Thu 14 Feb 2019 05:01:27 PM EST
+Last Modified : Fri 15 Feb 2019 06:20:28 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -188,27 +188,29 @@ class ClassicPlotter():
 
     def plot_spectra(self,measure,fs,readData=True,**kwargs):
         """
-
+        Plot welch spectra
 
         Parameters
         ----------
+        measure: Str or time-series
+            fieldname of timeseries windspeed
+        fs: float
+            samnpling rate (Hz)
+        readData: Boolean
+            set to true if measure is a string.
+        kwargs: named arguments
+            any named arguments the scipy welch function takes.
 
-
-        Returns
-        -------
-
-
-        Examples
-        --------
-        >>>
 
         """
-        freq,den = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
+        waveNumber,spectrum = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
         ax = plt.subplot(1,1,1)
         ax.set_xscale('log')
         ax.set_yscale('log')
-        ax.plot(freq,den)
-        ax.set_xlabel('frequency [Hz]')
+        ax.plot(waveNumber,spectrum)
+        ax.set_xlabel('waveNumber')
         ax.set_ylabel('U*S(t)(L^3/T^2)')
         ax.grid(True,which="both",ls="-")
+        ax.set_title('Power Spectrum vs Wavenumber')
+        return ax
 

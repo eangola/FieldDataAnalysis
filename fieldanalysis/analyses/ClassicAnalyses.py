@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Thu 14 Feb 2019 03:03:23 PM EST
+Last Modified : Fri 15 Feb 2019 06:16:06 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -54,7 +54,7 @@ class ClassicAnalyses():
         if readData:
             anem1 = self.reader.get_timeseries(anem1,self.startDate,self.endDate)
             anem2 = self.reader.get_timeseries(anem2,self.startDate,self.endDate)
-        
+
         ratio = anem1/anem2
         return ratio
 
@@ -366,5 +366,6 @@ class ClassicAnalyses():
             measure = self.reader.get_timeseries(measure,self.startDate,self.endDate)
 
         freq,dens = welch(measure,fs,**kwargs)
-
-        return freq,dens
+        waveNumber = freq/np.mean(measure)
+        spectrum = dens*np.mean(measure)
+        return waveNumber,spectrum
