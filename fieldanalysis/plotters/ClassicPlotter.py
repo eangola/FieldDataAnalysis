@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 15 Feb 2019 06:20:28 PM EST
+Last Modified : Fri 15 Feb 2019 06:30:34 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -186,7 +186,7 @@ class ClassicPlotter():
         ax.set_legend()
 
 
-    def plot_spectra(self,measure,fs,readData=True,**kwargs):
+    def plot_spectra(self,measure,fs,readData=True,label=None,**kwargs):
         """
         Plot welch spectra
 
@@ -207,10 +207,11 @@ class ClassicPlotter():
         ax = plt.subplot(1,1,1)
         ax.set_xscale('log')
         ax.set_yscale('log')
-        ax.plot(waveNumber,spectrum)
-        ax.set_xlabel('waveNumber')
+        ax.plot(waveNumber,spectrum,label=label)
+        ax.set_xlabel('Wave Number')
         ax.set_ylabel('U*S(t)(L^3/T^2)')
         ax.grid(True,which="both",ls="-")
         ax.set_title('Power Spectrum vs Wavenumber')
+
         return ax
 
