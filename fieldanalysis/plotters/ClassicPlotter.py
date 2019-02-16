@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 15 Feb 2019 06:30:34 PM EST
+Last Modified : Fri 15 Feb 2019 07:16:05 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -203,15 +203,25 @@ class ClassicPlotter():
 
 
         """
-        waveNumber,spectrum = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
+        results = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
+        waveNumber = results['waveNumber']
+        spectrum = results['spectrum']
         ax = plt.subplot(1,1,1)
         ax.set_xscale('log')
         ax.set_yscale('log')
         ax.plot(waveNumber,spectrum,label=label)
-        ax.set_xlabel('Wave Number')
-        ax.set_ylabel('U*S(t)(L^3/T^2)')
+        ax.set_xlabel('Wave Number',fontweight="bold")
+        ax.set_ylabel('U*S(t)(L^3/T^2)',fontweight="bold")
         ax.grid(True,which="both",ls="-")
-        ax.set_title('Power Spectrum vs Wavenumber')
+        startDate = self.analyses.startDate
+        endDate = self.analyses.endDate
+        ax.set_title('Power Spectrum vs Wavenumber \n %s to %s'%(startDate,endDate),fontweight="bold")
+
+        l_k = results['l_k']/1000
+        lambda_g = results['lambda_g']/1000
+        epsilon = results['epsilon']
+
+        print(label + ' l_k = %.3f, lambda_g = %.3f, epsilon = %.3f '%(l_k,lambda_g,epsilon))
 
         return ax
 

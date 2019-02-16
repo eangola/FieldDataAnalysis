@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 15 Feb 2019 06:16:06 PM EST
+Last Modified : Fri 15 Feb 2019 06:59:36 PM EST
 Created By : Enrique D. Angola
 
 Implements classic field data analyses methods for vanes and anemometers.
@@ -337,7 +337,7 @@ class ClassicAnalyses():
 
         return offAxisAngle
 
-    def compute_welch_spectra(self,measure,fs,readData=True,**kwargs):
+    def compute_welch_spectra(self,measure,fs,readData=True,alpha=0.49,nu=1.608*10**5,C=0.008,**kwargs):
         """
         Computes the power spectral density of power spectrum of wind speed (measure)
 
@@ -352,13 +352,14 @@ class ClassicAnalyses():
 
         Returns
         -------
-        freq: ndarray
-            array of frequencies
-        dens: ndarray
-            Power spectral density of power spectrum of measure
-
-        Examples
-        --------
+        dict:
+            waveNumber: ndarray
+                array of wavenumbers
+            spectrum: ndarray
+                Power spectral density of power spectrum of measure
+            epsilon: float
+            l_k: float
+            lambda_g: float
 
         """
         from scipy.signal import welch
@@ -368,4 +369,10 @@ class ClassicAnalyses():
         freq,dens = welch(measure,fs,**kwargs)
         waveNumber = freq/np.mean(measure)
         spectrum = dens*np.mean(measure)
-        return waveNumber,spectrum
+
+        epsilon = (np.mean(measure)*C/alpha)**(3/2)
+        l_k = (nu**3/epsilon)**(1/4)
+        lambda_g = np.sqrt(15*nu*np.std(measure)/epsilon)
+
+        return {'waveNumber':waveNumber,'spectrum':spectrum,'epsilon':epsilon,\
+                'l_k':l_k,'lambda_g':lambda_g}
