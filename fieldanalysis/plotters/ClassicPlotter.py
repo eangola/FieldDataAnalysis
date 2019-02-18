@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Fri 15 Feb 2019 07:16:05 PM EST
+Last Modified : Mon 18 Feb 2019 12:50:23 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -186,7 +186,7 @@ class ClassicPlotter():
         ax.set_legend()
 
 
-    def plot_spectra(self,measure,fs,readData=True,label=None,**kwargs):
+    def plot_spectra(self,measure,fs,title=False,readData=True,label=None,**kwargs):
         """
         Plot welch spectra
 
@@ -210,12 +210,13 @@ class ClassicPlotter():
         ax.set_xscale('log')
         ax.set_yscale('log')
         ax.plot(waveNumber,spectrum,label=label)
-        ax.set_xlabel('Wave Number',fontweight="bold")
-        ax.set_ylabel('U*S(t)(L^3/T^2)',fontweight="bold")
         ax.grid(True,which="both",ls="-")
         startDate = self.analyses.startDate
         endDate = self.analyses.endDate
-        ax.set_title('Power Spectrum vs Wavenumber \n %s to %s'%(startDate,endDate),fontweight="bold")
+        if title:
+            ax.set_title('Power Spectrum vs Wavenumber \n %s to %s'%(startDate,endDate),fontweight="bold")
+            ax.set_xlabel('Wave Number',fontweight="bold")
+            ax.set_ylabel('U*S(t)(L^3/T^2)',fontweight="bold")
 
         l_k = results['l_k']/1000
         lambda_g = results['lambda_g']/1000
