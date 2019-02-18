@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 06-12-2018
-Last Modified : Mon 18 Feb 2019 12:50:23 PM EST
+Last Modified : Mon 18 Feb 2019 01:45:15 PM EST
 Created By : Enrique D. Angola
 """
 from matplotlib import pylab as plt
@@ -186,7 +186,7 @@ class ClassicPlotter():
         ax.set_legend()
 
 
-    def plot_spectra(self,measure,fs,title=False,readData=True,label=None,**kwargs):
+    def plot_spectra(self,measure,fs,ax=None,readData=True,label=None,**kwargs):
         """
         Plot welch spectra
 
@@ -206,20 +206,20 @@ class ClassicPlotter():
         results = self.analyses.compute_welch_spectra(measure,fs,readData,**kwargs)
         waveNumber = results['waveNumber']
         spectrum = results['spectrum']
-        ax = plt.subplot(1,1,1)
+        if not ax:
+            ax = plt.subplot(1,1,1)
         ax.set_xscale('log')
         ax.set_yscale('log')
         ax.plot(waveNumber,spectrum,label=label)
         ax.grid(True,which="both",ls="-")
         startDate = self.analyses.startDate
         endDate = self.analyses.endDate
-        if title:
-            ax.set_title('Power Spectrum vs Wavenumber \n %s to %s'%(startDate,endDate),fontweight="bold")
-            ax.set_xlabel('Wave Number',fontweight="bold")
-            ax.set_ylabel('U*S(t)(L^3/T^2)',fontweight="bold")
+        ax.set_title('Power Spectrum vs Wavenumber \n %s to %s'%(startDate,endDate),fontweight="bold")
+        ax.set_xlabel('Wave Number',fontweight="bold")
+        ax.set_ylabel('U*S(t)(L^3/T^2)',fontweight="bold")
 
-        l_k = results['l_k']/1000
-        lambda_g = results['lambda_g']/1000
+        l_k = results['l_k']
+        lambda_g = results['lambda_g']
         epsilon = results['epsilon']
 
         print(label + ' l_k = %.3f, lambda_g = %.3f, epsilon = %.3f '%(l_k,lambda_g,epsilon))
