@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Thu 14 Feb 2019 02:56:07 PM EST
+Last Modified : Wed 20 Feb 2019 07:14:52 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -43,6 +43,8 @@ class SymPro():
             header = self._find_header()
         data = pd.read_csv(self.filename,skiprows=header, sep = sep,names=self.names)
         data = data.set_index('Timestamp')
+        data.index = pd.to_datetime(data.index)
+
         return data
 
     def _create_sql_context(self):

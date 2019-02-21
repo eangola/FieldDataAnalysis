@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 09-01-2019
-Last Modified : Thu 14 Feb 2019 02:55:43 PM EST
+Last Modified : Wed 20 Feb 2019 07:13:58 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
@@ -43,6 +43,7 @@ class Campbell(SymPro):
         #data = data.dropna()
         data.loc[:,data.columns != 'Timestamp'] = data.loc[:,data.columns != 'Timestamp'].astype(float)
         data.set_index('Timestamp')
+        data.index = pd.to_datetime(data.index)
         return data
 
     def _find_header(self,delimiter='rn'):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 13-02-2019
-Last Modified : Wed 13 Feb 2019 09:09:08 PM EST
+Last Modified : Wed 20 Feb 2019 07:16:47 PM EST
 Created By : Enrique D. Angola
 """
 from fieldanalysis.readers import SymPro
@@ -31,4 +31,5 @@ class Spidar(SymPro):
             data = pd.read_csv(f)
 
         data = data.set_index('Timestamp')
+        data.index = pd.to_datetime(data.index)
         return data
