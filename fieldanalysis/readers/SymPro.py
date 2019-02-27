@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 03-12-2018
-Last Modified : Wed 20 Feb 2019 07:14:52 PM EST
+Last Modified : Wed 27 Feb 2019 01:50:09 PM EST
 Created By : Enrique D. Angola
 """
 import pandas as pd
@@ -213,6 +213,8 @@ class SymPro():
         """
         for i,value in enumerate(self.header):
             if value == ['Channel:', str(channel)]:
+                if self.header[i+3][0] != 'Description':
+                    i = i + 1
                 sType = self.header[i+2][1]
                 height = self.header[i+5][1]
                 brand = self.header[i+3][1:]
