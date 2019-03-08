@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Created : 08-02-2019
-Last Modified : Mon 11 Feb 2019 08:03:41 PM EST
+Last Modified : Thu 07 Mar 2019 08:22:25 PM EST
 Created By : Enrique D. Angola
 """
 
@@ -11,7 +11,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import inspect
 from sqlalchemy import Column, Integer, String, DateTime, create_engine
 
-engine = create_engine('mssql+pyodbc://dsuser:dbuser1231$#ASDF!@nrgfusion.database.windows.net:1433/FusionWindResourceData?driver=ODBC+Driver+17+for+SQL+Server', echo=True)
+engine = create_engine('mssql+pyodbc://user/FusionWindResourceData?driver=ODBC+Driver+17+for+SQL+Server', echo=True)
 Base = declarative_base(engine)
 inspector = inspect(engine)
 con = engine.connect()
